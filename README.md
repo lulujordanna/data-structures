@@ -1,3 +1,3 @@
-## This is a repository for PGDV 5110 Data Structures
+## Data Structures
 
-Each Weekly Assignment can be found above with the code and individual README.
+This is a repository for PGDV 5110 - Data Structures, Fall 2019. Each Weekly Assignment can be found above with it's corresponding code and individual README.md file. 
