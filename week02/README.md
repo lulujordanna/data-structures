@@ -16,6 +16,7 @@ var location;
 
 <br>
 Using npm cheerio, I began to search for the parameters of the table that I needed. Unfortunately due to the inconsistencies in the HTML formating I could not just extract the paragraph's themselves. I started by removing the extra divs, spans, and bolded text elements that were not related to the address. 
+
 ```javascript
 var meetingTitle = $(elem).find('b').remove().html();
 var extraDiv = $(elem).find('div').remove().html(); 
@@ -24,6 +25,7 @@ var extraSpan = $(elem).find('span').remove().html();
 
 <br>
 I then created a variable called address get closer to the correct text itself and to strip out any white space. The .split() command created an array of these addresses. 
+
 ```javascript
 var address = $(elem).children().eq(0).text().replace(/\t/g,'').split('\n').filter(address=>address.trim().length > 1).map(i=>i.trim());
 ```

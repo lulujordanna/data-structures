@@ -18,7 +18,6 @@ $('tr tr tr').each(function(i, elem) {
     } 
         //Finds the need text in the table data and removes the white space
         var address = $(elem).children().eq(0).text().replace(/\t/g,'').split('\n').filter(address=>address.trim().length > 1).map(i=>i.trim()); 
-        //console.log(address); 
         
         //Extracts the key information of the address. 
         location = address[1] + ' New York, NY '; 
