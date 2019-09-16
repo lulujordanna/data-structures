@@ -2,7 +2,7 @@
 
 Building off of the week 01 assignment, the goal of this project was to use Node.js to read a single text file and create a new file with addresses of the Alcohol Anonymous meetings. I used Zone 10 from the AA map which is file m10.
 
-<br>
+
 ## Previous Solution 
 
 In the global variables portion of my document I requested the previous document, loaded in the cheerio package, wrote my new file and created an open variable called location which will be used to store the location data. Writing the file ahead of the cheerio commands help to account for the asynchronous nature of JavaScript. 
@@ -31,18 +31,17 @@ var address = $(elem).children().eq(0).text().replace(/\t/g,'').split('\n').filt
 ```
 
 <br>
-Using the location variable which I had created at the beginning, I created a string using the second position in the array (address number and street name) and added 'Manhattan NY' to complete the address.
+Using the location variable which I had created at the beginning, I created a string using the second position in the array (address number and street name) and added 'Manhattan NY' to complete the address. Using appendFileSync the information is added to the file without overwriting the previous information. 
+
 ```javascript
 location = address[1] + ' Manhattan NY '; 
 ```
 
-<br>
-Using appendFileSync the information is added to the file without overwriting the previous information. 
 
-<br>
 ## Current Solution 
 
 After further explanation of solutions in class, I have adapted my code to the following. This solution uses cheerio to search for the specific styling and parses the elements into a object. It also saves the file as a JSON which is more applicable then a text file for future use. 
+
 ```javascript
 var fs = require('fs');
 var cheerio = require('cheerio');
