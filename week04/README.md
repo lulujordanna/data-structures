@@ -4,7 +4,7 @@ Taking the data that I have parsed from the AA zone, the goal of this weeks assi
 ## Solution in Steps
 
 ### 1. Planning the database. 
-When initally planning my database, I thought of the heirachy of the data itself. While this is beneifical to understanding the structure of content, the structure for a relational database is better suited in multiple tables. 
+When initially planning my database, I thought of the hierarchy of the data itself. While this is beneficial to understanding the structure of content, the structure for a relational database is better suited in multiple tables. 
 
 ![Image of AA Data Hierarchy](https://github.com/lulujordanna/data-structures/blob/master/week04/files/aaHierarchy.jpg)
 
@@ -14,7 +14,7 @@ Using illustrator I mapped out the three tables I will need for the AA data stru
 
 
 ### 2. Security & Creating a table. 
-After setting up my database in AWS, I connected the database credentials to my JS file. Using the process.env command I kept my user credientals, host url and password in my environment variable to ensure these do not end up on GitHub. Once that was completed I created my locationGeo table in the database. 
+After setting up my database in AWS, I connected the database credentials to my JS file. Using the process.env command I kept my user credentials, host url and password in my environment variable to ensure these do not end up on GitHub. Once that was completed I created my locationGeo table in the database. 
 ```javascript
 var db_credentials = new Object();
 db_credentials.user = process.env.AWSRDS_USER;
