@@ -3,7 +3,7 @@
 The goal of this week’s assignment is to begin planning out how to build a NoSQL database and populating that database for our final assignment 2, “The Process Blog”.
 
 ### Planning 
-I plan on using my documentation from GitHub to showcase my development with JavaScript and my working process of the three final assignments. While the core functionality of each post won’t change (category, date, title, entry), I want there to be flexibility to include other multi-media and link out to webpages. I am using a semi-structured key-value and document database (DynamoDB).  For each entry, I am thinking of the following hierarchical structure.
+I plan on using my documentation from GitHub to showcase my development with JavaScript and my working process of the three final assignments. While the core functionality of each post won’t change (category, date, title, entry), I want there to be flexibility to include other multi-media and link out to webpages. I am using a semi-structured key-value and document database (DynamoDB).  For each entry, I am thinking of the following hierarchical structure and that the data coming out of the database will look fairly similar. 
 
 <strong>Category (PK)</strong>: Which project this entry belongs to (AA Meetings, Process Blog or ---)
 <br>
