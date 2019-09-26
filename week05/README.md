@@ -68,3 +68,7 @@ async.eachSeries(blogEntries, function(value, callback) {
 });  
 ```
 ![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/PopulatedDynamoDB.png)
+
+## Next Steps
+
+Moving forward I feel that my NoSQL database is a good start, I would need update and or populate the rest of the information. I also need to account for images that I may or may not have in each post. I currently put 'none' in that portion of the object field as I have no photos yet.  
