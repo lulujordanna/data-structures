@@ -20,7 +20,7 @@ I plan on using my documentation from GitHub to showcase my development with Jav
 
 
 ### Previous Solution 
-After creating the this plan, I modified the BlogEntry object to fit these parameters. I then populated the object and used the .push() method for the data to be stored in the blogEnteries array. Below is the code for the object and one example of the blog entry.
+After creating this plan, I modified the BlogEntry object to fit these parameters. I then populated the object and used the .push() method for the data to be stored in the blogEnteries array. Below is the code for the object and one example of the blog entry.
 ```Javascript
 var blogEntries = [];
 
