@@ -17,6 +17,7 @@ I plan on using my documentation from GitHub to showcase my development with Jav
 <br>
 <strong>Photo</strong>: Image that relates to the subject matter of the post
 
+![Data Structure](https://github.com/lulujordanna/data-structures/blob/master/week05/files/dataStructureProcess.png)
 
 
 ### Previous Solution 
