@@ -10,7 +10,7 @@ var blogEntries = [];
 class BlogEntry {
   constructor(category, date, title, entry, url, photo) {
     this.category = {};
-    this.category.S = category.toString();
+    this.category.S = category; 
     
     this.date = {}; 
     this.date.S = new Date(date).toDateString();
