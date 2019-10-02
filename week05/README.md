@@ -20,7 +20,7 @@ I plan on using my documentation from GitHub to showcase my development with Jav
 
 
 ### Previous Solution 
-After creating the this plan, I modified the BlogEntry object to fit these parameters. I then populated the object and used the .push() method for the data to be stored in the blogEnteries array. Below is the code for the object and one example of the blog entry.
+After creating this plan, I modified the BlogEntry object to fit these parameters. I then populated the object and used the .push() method for the data to be stored in the blogEnteries array. Below is the code for the object and one example of the blog entry.
 ```Javascript
 var blogEntries = [];
 
@@ -69,7 +69,7 @@ async.eachSeries(blogEntries, function(value, callback) {
   setTimeout(callback, 1000); 
 });  
 ```
-![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/PopulatedDynamoDB.png)
+![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/files/PopulatedDynamoDB.png)
 
 ## Current Solution 
 
@@ -106,4 +106,4 @@ class BlogEntry {
   }
 }
 ```
-![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/populatedDynamoDB2.png)
+![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/files/populatedDynamoDB2.png)
