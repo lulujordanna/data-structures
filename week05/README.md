@@ -69,7 +69,7 @@ async.eachSeries(blogEntries, function(value, callback) {
   setTimeout(callback, 1000); 
 });  
 ```
-![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/PopulatedDynamoDB.png)
+![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/files/PopulatedDynamoDB.png)
 
 ## Current Solution 
 
@@ -106,4 +106,4 @@ class BlogEntry {
   }
 }
 ```
-![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/populatedDynamoDB2.png)
+![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/files/populatedDynamoDB2.png)
