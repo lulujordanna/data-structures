@@ -17,7 +17,9 @@ I plan on using my documentation from GitHub to showcase my development with Jav
 <br>
 <strong>Photo</strong>: Image that relates to the subject matter of the post
 
-### Solution 
+
+
+### Previous Solution 
 After creating the this plan, I modified the BlogEntry object to fit these parameters. I then populated the object and used the .push() method for the data to be stored in the blogEnteries array. Below is the code for the object and one example of the blog entry.
 ```Javascript
 var blogEntries = [];
@@ -69,6 +71,39 @@ async.eachSeries(blogEntries, function(value, callback) {
 ```
 ![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/PopulatedDynamoDB.png)
 
-## Next Steps
+## Current Solution 
 
-Moving forward I feel that my NoSQL database is a good start, I would need update and or populate the rest of the information. I also need to account for images that I may or may not have in each post. I currently put 'none' in that portion of the object field as I have no photos yet.  
+Reflecting on last week, I felt that my NoSQL database is a good start but there was an issue with inputting images. I originally put a  'none' string in that portion of the object as I had no photos to upload yet. After class I was able to switch my code to reflect if a field does not have an item to upload. Below is the code for this section and a screenshot of the populated database.
+
+```Javascript
+var blogEntries = [];
+
+class BlogEntry {
+  constructor(category, date, title, entry, url, photo) {
+    this.category = {};
+    this.category.S = category.toString();
+    
+    this.date = {}; 
+    this.date.S = new Date(date).toDateString();
+    
+    this.title = {};
+    this.title.S = title;
+    
+    this.entry = {};
+    this.entry.S = entry;
+    
+    this.url = {};
+    this.url.S = url;
+    
+     if (photo != null) {
+      this.photo = {};
+      this.photo.S = photo;
+    }
+    
+    this.month = {};
+    this.month.N = new Date(date).getMonth().toString();
+    
+  }
+}
+```
+![Screenshot of Populated Database](https://github.com/lulujordanna/data-structures/blob/master/week05/PopulatedDynamoDB.png)
