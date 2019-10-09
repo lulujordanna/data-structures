@@ -16,6 +16,9 @@ I plan on using my documentation from GitHub to showcase my development with Jav
 <strong>URL</strong>: A link to my GitHub
 <br>
 <strong>Photo</strong>: Image that relates to the subject matter of the post
+<br>
+<strong>Month</strong>: The month in which the post was created.
+
 
 ![Data Structure](https://github.com/lulujordanna/data-structures/blob/master/week05/files/dataStructureProcess.png)
 
@@ -82,7 +85,7 @@ var blogEntries = [];
 class BlogEntry {
   constructor(category, date, title, entry, url, photo) {
     this.category = {};
-    this.category.S = category.toString();
+    this.category.S = category; 
     
     this.date = {}; 
     this.date.S = new Date(date).toDateString();
