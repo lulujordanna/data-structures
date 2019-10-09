@@ -74,4 +74,4 @@ dynamodb.query(params, function(err, data) {
 ![Image of NoSQL query](https://github.com/lulujordanna/data-structures/blob/master/week06/files/NoSQLQuery.png)
 
 ## Next Steps
-While I mentioned this above, my main goal would be to focus on more complex queries for the SQL database. This has to do with having more data available, which I am currently working on implementing by re-parsing additional information from the HTML pages. More information and process' are available in my [week07](https://github.com/lulujordanna/data-structures/tree/master/week07) folder. 
+While I mentioned this above, my main goal would be to focus on more complex queries for the SQL database. This has to do with having more data available, which I am currently working on implementing by re-parsing additional information from the HTML pages. My process and code is available in my [week07](https://github.com/lulujordanna/data-structures/tree/master/week07) folder. 
