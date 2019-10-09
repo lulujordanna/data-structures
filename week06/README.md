@@ -2,7 +2,7 @@
 The goal of this weeks assignment is to create queries from both the AA data in my PostgreSQL database and the Process Blog data in DynamoDB.
 
 ## Solution AA 
-The goal of the query is to filter meetings based on parameters for the planned map. I queried the address, latitiude and longitude as this was the current information I have populated in the PostgreSQL database. 
+The goal of the query is to filter meetings based on parameters for the planned map. I queried the address, latitude and longitude as this was the current information I have populated in the PostgreSQL database. 
 I am currently working on parsing out more information from the HTML pages to be able to create further, more complex queries based on meeting times, day, etc. Below is the code and screenshot of the final outcome. 
 
 ```javascript
@@ -37,6 +37,8 @@ client.query(thisQuery, (err, res) => {
 ![Image of SQL query](https://github.com/lulujordanna/data-structures/blob/master/week06/files/SQLQuery.png)
 
 ## Solution Process Blog
+By modifying the starter code I was able to create a successful query from my DynamoDB database. In order to ensure that both the partition key and sort key were expressed in the query, I made the ExpressionAttributeNames align with the two values; category and date. In the final query I requested the Process Blog data between August 30th and December 11th. While there is only one Process Blog entry to be returned (see screenshot), I did test this out with the AA Meetings entries and changed the date parameters to ensure that different queries were successful. 
+
 ```javascript
 var AWS = require('aws-sdk');
 AWS.config = new AWS.Config();
@@ -71,6 +73,5 @@ dynamodb.query(params, function(err, data) {
 ```
 ![Image of NoSQL query](https://github.com/lulujordanna/data-structures/blob/master/week06/files/NoSQLQuery.png)
 
-
-
 ## Next Steps
+While I mentioned this above, my main goal would be to focus on more complex queries for the SQL database. This has to do with having more data available, which I am currently working on implementing by re-parsing additional information from the HTML pages. More information and process' are available in my [week07](https://github.com/lulujordanna/data-structures/tree/master/week07) folder. 
