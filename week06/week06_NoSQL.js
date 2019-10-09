@@ -13,7 +13,7 @@ var params = {
         "#dt" : "date"
     },
     ExpressionAttributeValues: { // the query values
-        ":categoryName": {S: "AA Meetings"}, 
+        ":categoryName": {S: "Process Blog"}, 
         ":minDate": {S: new Date("August 30, 2019").toDateString()},
         ":maxDate": {S: new Date("December 11, 2019").toDateString()}
     }
