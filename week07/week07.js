@@ -22,22 +22,9 @@ $('tr').each(function(l, trElem) {
         thisMeeting.state = 'NY'; 
         
         meetingData.push(thisMeeting); 
-    }
-    
-    else if ($(elem).attr("style")=="border-bottom:1px solid #e3e3e3;width:350px;"){
-        var thisMeetingInfo = {}; 
-        
-        thisMeetingInfo.locationID = id;
-        thisMeetingInfo.day = $(elem).html().split('<b>').trim(); 
-        //thisMeetingInfo.startTime 
-        //thisMeetingInfo.endTime 
-        //thisMeetingInfo.meetingType 
-        
-        meetingData.push(thisMeetingInfo); 
-      }
-    }); 
+    }; 
+  });
 });
 
-
-console.log(meetingData);
-//fs.writeFileSync('/home/ec2-user/environment/week07/data/m10.JSON', JSON.stringify(meetingData));
+//console.log(meetingData);
+fs.writeFileSync('/home/ec2-user/environment/week07/data/m10.JSON', JSON.stringify(meetingData));
