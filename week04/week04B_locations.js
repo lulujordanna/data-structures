@@ -14,7 +14,7 @@ db_credentials.password = process.env.AWSRDS_PW;
 db_credentials.port = 5432;
 
 //Loading in the JSON file from last week to create a loop to remove duplicate locations 
-var content = fs.readFileSync('/home/ec2-user/environment/week03/data/m10.JSON');
+var content = fs.readFileSync('/home/ec2-user/environment/week07/data/locationGeo09_Update.JSON');
 content = JSON.parse(content);
 //console.log(content); 
 
@@ -32,12 +32,20 @@ for (var i = 0; i < content.length; i++) {
       addressesCheck.push(latLonCombined);
   }
 }
+
+var zone = '9'; 
+for (var i = 0; i < addressesForDb.length; i++){
+  let id = zone+'_' + i;
+  addressesForDb[i].id = id; 
+}
+
+
 //console.log(addressesForDb); 
 
 async.eachSeries(addressesForDb, function(value, callback) {
     const client = new Client(db_credentials);
     client.connect();
-    var thisQuery = "INSERT INTO locationGeo VALUES ('"+ 0 +"', E'"+ value.street +"', '"+ value.NULL +"', " + value.lat + ", " + value.long + ");";
+    var thisQuery = "INSERT INTO locationGeo VALUES ('"+ value.id +"', E'"+ value.street +"', '"+ value.name +"', " + value.lat + ", " + value.long + ");";
     
     client.query(thisQuery, (err, res) => {
         console.log(err, res);
