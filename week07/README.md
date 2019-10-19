@@ -83,3 +83,95 @@ async.eachSeries(addressesForDb, function(value, callback) {
     setTimeout(callback, 1000); 
 });
 ```
+![LocationGeo Query](https://github.com/lulujordanna/data-structures/blob/master/week07/images/locationsQuery.png)
+
+### Parse data for the schedule table
+Once the locationGeo table was complete I began to parse my data for the schedule table. I needed to figure out a way to connect the unqiue location ID's with the indiviual rows of the html page.  By bringing in the AWS instance to the JS file, I was able to connect to my database. I then used a query to select all items in the locationGeo table. In an if/else statement I wrote if the query was successful, that is when the cheerio process would begin. I create an empty variable called address to hold the street address data. Using cheerio I parsed through the html to find the street address string and then moved onto the meeting details (day, time, meeting type). Var meetingDetails was a variable which I used to clean up the data inside this row. I then created an object This Meeting, to connect the address variable to the unique locationIDs in the database. I then made another object called thisMeetingDetails to clean up the data for the day, time, meeting type and special interest. Both objects were pushed into the meetingData array which was used my fs.writeFileSync command for the JSON file. The structure of this data created a nesting object within the [JSON file](https://github.com/lulujordanna/data-structures/blob/master/week07/data/schedule10.JSON). Below is all the code for the JS schedule files. 
+
+```Javascript
+const { Client } = require('pg');
+const dotenv = require('dotenv');
+dotenv.config({path: '/home/ec2-user/environment/.env'});
+
+var fs = require('fs');
+var cheerio = require('cheerio');
+
+var zone = '10'
+var content = fs.readFileSync('/home/ec2-user/environment/week01/data/m'+zone+'.txt');
+var $ = cheerio.load(content);
+
+
+// AWS RDS POSTGRESQL INSTANCE
+var db_credentials = new Object();
+db_credentials.user = process.env.AWSRDS_USER;
+db_credentials.host = process.env.AWSRDS_HOST;
+db_credentials.database = 'aa';
+db_credentials.password = process.env.AWSRDS_PW;
+db_credentials.port = 5432;
+
+// Connect to the AWS RDS Postgres database
+const client = new Client(db_credentials);
+client.connect();
+
+// Sample SQL statement to query the entire contents of a table: 
+var thisQuery = "SELECT * FROM locationGeo;";
+
+client.query(thisQuery, (err, res) => {
+    if (err) {
+        console.log(err);
+    } else {
+        var meetingData = []; 
+        let locationData = res.rows;
+        client.end();
+        
+        $('tr').each(function(l, trElem) {
+            
+            var address;
+            
+            $(trElem).children().each(function(i,elem) {
+                
+                if ($(elem).attr("style")=="border-bottom:1px solid #e3e3e3; width:260px"){
+                    var streetAddress = $(elem).html().split('<br>')[2].trim().split(',')[0];
+                    address = streetAddress; 
+                }
+            
+                if ($(elem).attr("style")=="border-bottom:1px solid #e3e3e3;width:350px;"){
+                    //console.log(address);
+                    var meetingDetails = $(elem).text().trim(); 
+                    meetingDetails = meetingDetails.replace(/[ \t] + /g, " ").trim(); 
+                    meetingDetails = meetingDetails.replace(/[ \r\n | \n]/g, " ").trim(); 
+                    meetingDetails = meetingDetails.replace(/[ \t]/g, " ").trim();
+                    meetingDetails = meetingDetails.split('                    '); 
+                    //console.log(meetingDetails, address); 
+                    
+                    var thisMeeting = {}; 
+                    for (var i = 0; i < locationData.length; i++){
+                        if (locationData[i].address == address){
+                           var idF = locationData[i].locationid;
+                           thisMeeting.id = idF;
+                        }
+                    }
+                    
+                    var thisMeetingDetails = [];
+                    for (var i=0;i<meetingDetails.length;i++) {
+                        var thisMeetingDetailObj = {};
+                        thisMeetingDetailObj.day = meetingDetails[i].trim().split(" ")[0];
+                        thisMeetingDetailObj.startTime = meetingDetails[i].trim().split("From")[1].trim().split('to')[0]; 
+                        thisMeetingDetailObj.endTime = meetingDetails[i].trim().split("to")[1].trim().split('Meeting')[0]; 
+                        thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type)[1].trim().split('Special')[0];
+                        thisMeetingDetailObj.specialInterest = meetingDetails[i].trim().split("Interest")[1];
+                        
+                        thisMeetingDetails.push(thisMeetingDetailObj);
+                    }
+                    thisMeeting.meetings = thisMeetingDetails;
+                    //console.log(thisMeeting);
+                    
+                    meetingData.push(thisMeeting); 
+                }
+            }); 
+        });
+        //console.log(meetingData[0]);
+        fs.writeFileSync('/home/ec2-user/environment/week07/data/schedule'+zone+'.JSON', JSON.stringify(meetingData));
+    }
+});
+```
