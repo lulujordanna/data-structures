@@ -2,7 +2,7 @@
 const { Client } = require('pg');
 var async = require('async');
 const dotenv = require('dotenv');
-dotenv.config({path: '/home/ec2-user/environment/.env'});
+dotenv.config({path:'/home/ec2-user/environment/.env'});
 var fs = require('fs');
 
 // AWS RDS POSTGRESQL INSTANCE
@@ -14,7 +14,7 @@ db_credentials.password = process.env.AWSRDS_PW;
 db_credentials.port = 5432;
 
 //Loading in the JSON file from last week to create a loop to remove duplicate locations 
-var content = fs.readFileSync('/home/ec2-user/environment/week07/data/locationGeo09_Update.JSON');
+var content = fs.readFileSync('/home/ec2-user/environment/week07/data/locationGeo01_Update.JSON');
 content = JSON.parse(content);
 //console.log(content); 
 
@@ -33,7 +33,7 @@ for (var i = 0; i < content.length; i++) {
   }
 }
 
-var zone = '9'; 
+var zone = '1'; 
 for (var i = 0; i < addressesForDb.length; i++){
   let id = zone+'_' + i;
   addressesForDb[i].id = id; 
