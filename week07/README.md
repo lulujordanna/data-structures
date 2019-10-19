@@ -175,3 +175,29 @@ client.query(thisQuery, (err, res) => {
     }
 });
 ```
+
+### Inputting the data into the schedules SQL table
+Building upon my data structure, I initally had issues inputting my data into the schedule table. Using a nested async function, I helped to ensure that the nesting JSON structure be able to be inserted into the database. I also added an if statement to account for the Special Interest value. As not all meetings has special interest, this accounts for it and inserts a NULL in the database if it was undefined. Below is my code and screenshot of the query.  
+
+```Javascript
+//Loading in the schedule JSON file
+var content = fs.readFileSync('/home/ec2-user/environment/week07/data/schedule10.JSON');
+var scheduleContent = JSON.parse(content);
+
+async.eachSeries(scheduleContent, function(meeting, callback) {
+    async.eachSeries(meeting.meetings, function(value, callback) {
+        const client = new Client(db_credentials);
+        client.connect();
+        var thisQuery = "INSERT INTO schedule VALUES ('"+ meeting.id +"','"+ value.day +"','"+ value.startTime +"','" + value.endTime + "','" + value.meetingType;
+        if (value.specialInterest){ thisQuery += "','" + value.specialInterest}
+        thisQuery += "');";
+        client.query(thisQuery, (err, res) => {
+            console.log(err, res);
+            client.end();
+        });
+        setTimeout(callback, 1000);
+    });  
+    setTimeout(callback, 1000);
+});  
+```
+![Schedule Query](https://github.com/lulujordanna/data-structures/blob/master/week07/images/scheduleQuery.png)
