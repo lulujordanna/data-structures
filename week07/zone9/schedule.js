@@ -5,7 +5,7 @@ dotenv.config({path: '/home/ec2-user/environment/.env'});
 var fs = require('fs');
 var cheerio = require('cheerio');
 
-var zone = '09'
+var zone = '09'; 
 var content = fs.readFileSync('/home/ec2-user/environment/week01/data/m'+zone+'.txt');
 var $ = cheerio.load(content);
 
@@ -73,8 +73,8 @@ client.query(thisQuery, (err, res) => {
                         thisMeetingDetails.push(thisMeetingDetailObj);
                     }
                     thisMeeting.meetings = thisMeetingDetails;
-                    //console.log(thisMeeting);
                     
+                    //console.log(thisMeeting);
                     meetingData.push(thisMeeting); 
                 }
             }); 

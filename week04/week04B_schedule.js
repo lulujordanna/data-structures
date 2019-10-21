@@ -14,7 +14,7 @@ db_credentials.password = process.env.AWSRDS_PW;
 db_credentials.port = 5432;
 
 //Loading in the schedule JSON file
-var content = fs.readFileSync('/home/ec2-user/environment/week07/data/schedule09.JSON');
+var content = fs.readFileSync('/home/ec2-user/environment/week07/data/schedule01.JSON');
 var scheduleContent = JSON.parse(content);
 
 async.eachSeries(scheduleContent, function(meeting, callback) {

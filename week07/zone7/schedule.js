@@ -67,9 +67,13 @@ client.query(thisQuery, (err, res) => {
                         thisMeetingDetailObj.day = meetingDetails[i].trim().split(" ")[0];
                         thisMeetingDetailObj.startTime = meetingDetails[i].trim().split("From")[1].trim().split('to')[0]; 
                         thisMeetingDetailObj.endTime = meetingDetails[i].trim().split("to")[1].trim().split('Meeting')[0];
-                        
-                        // thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type")[1].trim().split("Special")[0];
-                        // thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type")[1];
+                        if (meetingDetails[i].trim().split("Type")[1]) {
+                            thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type")[1].trim().split("Special")[0];
+                        } else {
+                            //console.log('no meeting type found : \n', meetingDetails);
+                            thisMeetingDetailObj.meetingType = 'not available';
+                        }
+
                         
                         thisMeetingDetailObj.specialInterest = meetingDetails[i].trim().split("Interest")[1];
                         thisMeetingDetails.push(thisMeetingDetailObj);
@@ -82,6 +86,6 @@ client.query(thisQuery, (err, res) => {
             }); 
         });
         //console.log(meetingData[0]);
-        //fs.writeFileSync('/home/ec2-user/environment/week07/data/schedule'+zone+'.JSON', JSON.stringify(meetingData));
+        fs.writeFileSync('/home/ec2-user/environment/week07/data/schedule'+zone+'.JSON', JSON.stringify(meetingData));
     }
 });

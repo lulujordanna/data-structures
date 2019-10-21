@@ -5,7 +5,7 @@ dotenv.config({path: '/home/ec2-user/environment/.env'});
 var fs = require('fs');
 var cheerio = require('cheerio');
 
-var zone = '10'
+var zone = '02'; 
 var content = fs.readFileSync('/home/ec2-user/environment/week01/data/m'+zone+'.txt');
 var $ = cheerio.load(content);
 
@@ -66,20 +66,24 @@ client.query(thisQuery, (err, res) => {
                         var thisMeetingDetailObj = {};
                         thisMeetingDetailObj.day = meetingDetails[i].trim().split(" ")[0];
                         thisMeetingDetailObj.startTime = meetingDetails[i].trim().split("From")[1].trim().split('to')[0]; 
-                        thisMeetingDetailObj.endTime = meetingDetails[i].trim().split("to")[1].trim().split('Meeting')[0]; 
-                        thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type")[1].trim().split('Special')[0];
+                        thisMeetingDetailObj.endTime = meetingDetails[i].trim().split("to")[1].trim().split('Meeting')[0];
+                        if (meetingDetails[i].trim().split("Type")[1]) {
+                            thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type")[1].trim().split("Special")[0];
+                        } else {
+                            //console.log('no meeting type found : \n', meetingDetails);
+                            thisMeetingDetailObj.meetingType = 'not available';
+                        }
                         thisMeetingDetailObj.specialInterest = meetingDetails[i].trim().split("Interest")[1];
-                        
                         thisMeetingDetails.push(thisMeetingDetailObj);
                     }
                     thisMeeting.meetings = thisMeetingDetails;
-                    
                     //console.log(thisMeeting);
+                    
                     meetingData.push(thisMeeting); 
                 }
             }); 
         });
-        console.log(meetingData[0]);
-        //fs.writeFileSync('/home/ec2-user/environment/week07/data/schedule'+zone+'.JSON', JSON.stringify(meetingData));
+        //console.log(meetingData[0]);
+        fs.writeFileSync('/home/ec2-user/environment/week07/data/schedule'+zone+'.JSON', JSON.stringify(meetingData));
     }
 });
