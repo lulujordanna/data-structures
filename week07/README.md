@@ -157,14 +157,20 @@ client.query(thisQuery, (err, res) => {
                         var thisMeetingDetailObj = {};
                         thisMeetingDetailObj.day = meetingDetails[i].trim().split(" ")[0];
                         thisMeetingDetailObj.startTime = meetingDetails[i].trim().split("From")[1].trim().split('to')[0]; 
-                        thisMeetingDetailObj.endTime = meetingDetails[i].trim().split("to")[1].trim().split('Meeting')[0]; 
-                        thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type)[1].trim().split('Special')[0];
-                        thisMeetingDetailObj.specialInterest = meetingDetails[i].trim().split("Interest")[1];
+                        thisMeetingDetailObj.endTime = meetingDetails[i].trim().split("to")[1].trim().split('Meeting')[0];
+                        if (meetingDetails[i].trim().split("Type")[1]) {
+                            thisMeetingDetailObj.meetingType = meetingDetails[i].trim().split("Type")[1].trim().split("Special")[0];
+                        } else {
+                            //console.log('no meeting type found : \n', meetingDetails);
+                            thisMeetingDetailObj.meetingType = 'not available';
+                        }
+
                         
+                        thisMeetingDetailObj.specialInterest = meetingDetails[i].trim().split("Interest")[1];
                         thisMeetingDetails.push(thisMeetingDetailObj);
                     }
                     thisMeeting.meetings = thisMeetingDetails;
-                    //console.log(thisMeeting);
+                    console.log(thisMeeting);
                     
                     meetingData.push(thisMeeting); 
                 }
