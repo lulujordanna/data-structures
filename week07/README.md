@@ -3,10 +3,10 @@ The goal of this assignment was to finishing parsing the rest of the data from t
 
 ## Solution 
 ![New Data Structure](https://github.com/lulujordanna/data-structures/blob/master/week07/images/DS_AA.png)
-Since, Week04 the data structure has changed. Based on the information I want and was able to parse, I am moving forwards with a two table SQL database. The first table, locationGeo is similar to the structure from before, with a slight changed to the datatype for locationID. While the second table, schedule has changed a lot based on the data parsed and what datatypes they were available. Below I will break down the steps to populating this new structure, however all files with the update structure can be found in my [week04 folder](https://github.com/lulujordanna/data-structures/tree/master/week04). 
+Since, [Week 04](https://github.com/lulujordanna/data-structures/tree/master/week04) the data structure has changed, based on the information I want to use and I was able to parse. I am moving forward with a two table SQL database. The first table, locationGeo is similar to the structure from before, with a change to the datatype for locationID. While the second table, schedule has changed a lot based on the data parsed and what datatypes they were available. Below I will break down the steps to populating this new structure, however all files with the updated structure can be found in my [week04 folder](https://github.com/lulujordanna/data-structures/tree/master/week04). 
 
 ### Parse additional information for the address
-Building upon the structure that we have worked with in the previous weeks, I wanted to add the address name to database. In order to do this I had to add an additional field to parse the addressName key. Once that data was scrapped I created a JSON file ([locationGeo10.JSON](https://github.com/lulujordanna/data-structures/blob/master/week07/data/locationGeo10.JSON)). 
+Building upon the format that we have worked with in the previous weeks, I wanted to add the address name to database. In order to do this I had to add an additional field to parse the addressName key. Once that data was scrapped I created a JSON file ([locationGeo10.JSON](https://github.com/lulujordanna/data-structures/blob/master/week07/data/locationGeo10.JSON)). 
 
 ```javascript
 var zone = '10'
@@ -37,7 +37,7 @@ console.log(meetingData);
 ```
 
 ### Geo-Coding
-Taking the code sample from week03, I created a new [JS file](https://github.com/lulujordanna/data-structures/blob/master/week07/zone10/locationGeoCoded.js) to tackle the Geo-coding with the JSON file that I parsed. Once the script was complete and the latitude and longitude were parsed from the TAMU API request, I saved this as a new JSON file to show my progression ([locationGeo10_Update.JSON](https://github.com/lulujordanna/data-structures/blob/master/week07/data/locationGeo10_Update.JSON)). 
+Taking the code sample from week03, I created a new [JS file](https://github.com/lulujordanna/data-structures/blob/master/week07/zone10/locationGeoCoded.js) to tackle the Geo-coding with the JSON file that I created. Once the script was complete and the latitude and longitude were parsed from the TAMU API request, I saved this as a new JSON file to show my progression ([locationGeo10_Update.JSON](https://github.com/lulujordanna/data-structures/blob/master/week07/data/locationGeo10_Update.JSON)). 
 
 ### Removing duplicate locations and inputting the data into the database. 
 Using the logic and data structure from week04, I began by removing duplicate locations. I then added an additional parameter by using a for() loop to assign a locationID to each address. This was a way to ensure that duplicate addresses were only inputting once in the database and ultimately to connect my locationGeo table to the Schedule table. I then queried the database to ensure that the addresses were correctly inserted. I repeated this process for all remaining zones to complete my locationGeo table. Below is a screenshot of the final query. 
@@ -86,7 +86,11 @@ async.eachSeries(addressesForDb, function(value, callback) {
 ![LocationGeo Query](https://github.com/lulujordanna/data-structures/blob/master/week07/images/locationsQuery.png)
 
 ### Parse data for the schedule table
-Once the locationGeo table was complete I began to parse my data for the schedule table. I needed to figure out a way to connect the unique location ID's with the individual rows of the html page.  By bringing in the AWS instance to the JS file, I was able to connect to my database. I then used a query to select all items in the locationGeo table. In an if/else statement I wrote if the query was successful, that is when the cheerio process would begin. I create an empty variable called address to hold the street address data. Using cheerio I parsed through the html to find the street address string and then moved onto the meeting details (day, time, meeting type). Var meetingDetails was a variable which I used to clean up the data inside this row. I then created an object This Meeting, to connect the address variable to the unique locationIDs in the database. I then made another object called thisMeetingDetails to clean up the data for the day, time, meeting type and special interest. Both objects were pushed into the meetingData array which was used my fs.writeFileSync command for the JSON file. The structure of this data created a nesting object within the [JSON file](https://github.com/lulujordanna/data-structures/blob/master/week07/data/schedule10.JSON). Below is all the code for the JS schedule files. 
+Once the locationGeo table was complete I began to parse my data for the schedule table. I needed to figure out a way to connect the unique location ID's with the individual rows of the html page.  By bringing in the AWS instance to the JS file, I was able to connect to my database. I then used a query to select all items in the locationGeo table. In an if/else statement I wrote if the query was successful, I would then used npm cheerio to begin scraping the data. I create an empty variable called address to hold the street address data and used cheerio to parsed through the html to find the string. 
+
+I then began to move onto meeting details (day, time, meeting type). Var meetingDetails is a variable which I used to clean up the data inside the html rows (removing white space, etc). I then created an object called This Meeting to store the meeting data. Then I made a for() loop to iterate through the address variable, and connect the data inside to the unique locationIDs in the database.
+
+Once the unqiue location ID's were assigned and validated, I made another object called thisMeetingDetails to clean up the data for the day, time, meeting type and special interest. Both objects (ThisMeeting & ThisMeetingDetails) were pushed into the meetingData array which was used my fs.writeFileSync command for the JSON file. The structure of this data created a nesting object within the [JSON file](https://github.com/lulujordanna/data-structures/blob/master/week07/data/schedule10.JSON). Below is all the code for the JS schedule files. 
 
 ```Javascript
 const { Client } = require('pg');
@@ -183,7 +187,7 @@ client.query(thisQuery, (err, res) => {
 ```
 
 ### Inputting the data into the schedules SQL table
-Building upon my data structure, I initially had issues inputting my data into the schedule table. Using a nested async function, I helped to ensure that the nesting JSON structure be able to be inserted into the database. I also added an if statement to account for the Special Interest value. As not all meetings has special interest, this accounts for it and inserts a NULL in the database if it was undefined. Below is my code and screenshot of the query.  
+I initially had issues inputting my data into the schedule table however, using a nested async function, it helped to ensure that the nesting JSON structure would be able to be inserted into the database. I also added an if statement to account for the 'Special Interest' value. As not all meetings has special interest, this accounts for it and inserts a NULL in the database if it was undefined. Below is my code and screenshot of the query.  
 
 ```Javascript
 //Loading in the schedule JSON file
@@ -209,4 +213,4 @@ async.eachSeries(scheduleContent, function(meeting, callback) {
 ![Schedule Query](https://github.com/lulujordanna/data-structures/blob/master/week07/images/scheduleQuery.png)
 
 ## Reflection / Next Steps
-While reflecting on this weekly assignment there has been great strides in my coding abilities but some fallbacks as well. This weeks assignment had challenged me in ways I didn't believe I could complete and I am proud of how my database is structured. That being said, I chose to only parse the information I felt necessary for my final assignment and omitted the elements that I struggled to parse (accessibility and meeting notes). Moving forward I would like to find a way to clean up any inconsistencies with the address names in the strings.
+While reflecting on this weekly assignment there has been great strides in my coding abilities but some fallbacks as well. This weeks assignment had challenged me in ways I didn't believe I could complete and I am proud of how my database is structured. That being said, I chose to only parse the information I felt necessary for my final assignment and omitted the elements that I struggled to parse (accessibility and meeting notes). 
