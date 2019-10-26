@@ -212,5 +212,5 @@ async.eachSeries(scheduleContent, function(meeting, callback) {
 ```
 ![Schedule Query](https://github.com/lulujordanna/data-structures/blob/master/week07/images/scheduleQuery.png)
 
-## Reflection / Next Steps
+## Reflection
 While reflecting on this weekly assignment there has been great strides in my coding abilities but some fallbacks as well. This weeks assignment had challenged me in ways I didn't believe I could complete and I am proud of how my database is structured. That being said, I chose to only parse the information I felt necessary for my final assignment and omitted the elements that I struggled to parse (accessibility and meeting notes). 
