@@ -18,11 +18,13 @@ client.connect();
 
 // Sample SQL statement to create a table: 
 //var thisQuery = "CREATE TABLE locationGeo (locationID varchar(100), address varchar(100), addressName varchar(100), lat double precision, long double precision);";
-var thisQuery = "CREATE TABLE schedule (locationID varchar(100), meetingDay varchar(100), meetingStartTime varchar(100), meetingEndTime varchar(100), meetingType varchar(100), meetingSpecialInterest varchar(100));";
+//var thisQuery = "CREATE TABLE schedule (locationID varchar(100), meetingDay varchar(100), meetingStartTime varchar(100), meetingEndTime varchar(100), meetingType varchar(100), meetingSpecialInterest varchar(100));";
+var thisQuery = "CREATE TABLE zoneNames (zoneID varchar(100), zoneName varchar(100));";
 
 // Sample SQL statement to delete a table: 
 //var thisQuery = "DROP TABLE locationGeo;"; 
 //var thisQuery = "DROP TABLE schedule;"; 
+//var thisQuery = "DROP TABLE zoneNames;"; 
 
 client.query(thisQuery, (err, res) => {
     console.log(err, res);

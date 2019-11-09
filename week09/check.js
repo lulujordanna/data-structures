@@ -28,17 +28,17 @@ client.query(thisQuery, (err, res) => {
     }
 });
 
-client.query(secondQuery, (err, res) => {
-    if (err) {throw err}
-    else {
-    console.table(res.rows);
-    }
-});
+// client.query(secondQuery, (err, res) => {
+//     if (err) {throw err}
+//     else {
+//     console.table(res.rows);
+//     }
+// });
 
-client.query(thirdQuery, (err, res) => {
-    if (err) {throw err}
-    else {
-    console.table(res.rows);
-    }
-    client.end();
-});
+// client.query(thirdQuery, (err, res) => {
+//     if (err) {throw err}
+//     else {
+//     console.table(res.rows);
+//     }
+//     client.end();
+// });
