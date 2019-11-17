@@ -39,6 +39,8 @@ app.get('/', function(req, res) {
 ```
 
 ### AA Meetings - SQL 
+To query the database for the AA Meetings, I used a query that Ryan and I wrote which connects a Location ID to a zone ID. Joining these two tables together is cruical in the data mapping of my final project. Once the query is successful, the data is pushed to an array called aaOutput which is the data type sent to the webpage using the express app.get function. 
+
 ```javascript
 var aaOutput = []
 
@@ -64,4 +66,27 @@ client.query(firstQuery, (err, res) => {
         // client.end();
     }
 });
+```
+
+### Sensor - SQL 
+As the Sensor data also uses a SQL database the process and Javascript was similar to the AA Meetings. I currently have 
+
+```javascript
+var sensorOutput = [];
+
+app.get('/sensor.html', function(req, res) {
+    res.send(sensorOutput);
+});
+
+//SQL query for sensor data: 
+var thirdQuery = "SELECT * FROM sensorData;"; // print the number of rows for each sensorValue
+    
+    client.query(thirdQuery, (err, res) => {
+        if (err) {throw err}
+        else {
+            // console.table(res.rows);
+            sensorOutput.push(res.rows);
+        }
+         client.end();
+    });
 ```
