@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
 ```
 
 ### AA Meetings - SQL 
-To query the database for the AA Meetings, I currently have a query that Ryan and I wrote which connects a Location ID to a zone ID. Joining these two tables together is crucial in the data mapping of my final project. Once the query is successful, the data is pushed to an array called aaOutput which is the data type sent to the webpage using the express app.get function. 
+To query the database for the AA Meetings, I currently have a query that Ryan and I wrote which connects a locationID to a zoneID. Joining these two tables together is crucial in the data mapping of my final project. Once the query is successful, the data is pushed to an array called aaOutput which is the data type sent to the webpage using the express app.get function. 
 
 ```javascript
 var aaOutput = []
@@ -67,6 +67,7 @@ client.query(firstQuery, (err, res) => {
     }
 });
 ```
+![Image of aa data](https://github.com/lulujordanna/data-structures/blob/master/week10/images/aa.png)
 
 ### Sensor - SQL 
 As the Sensor data also uses a SQL database the process and Javascript was similar to the AA Meetings. I currently have a query which prints everything from the sensorData table. Ultimately the temperature needs to be aggregated by hour of each day but querying the data this way felt the most applicable then grouping by value or count. 
@@ -90,9 +91,10 @@ var thirdQuery = "SELECT * FROM sensorData;";
          client.end();
     });
 ```
+![Image of sensor data](https://github.com/lulujordanna/data-structures/blob/master/week10/images/sensor.png)
 
 ### Process Blog - NoSQL 
-The NoSQL database is a different query structure. I currently have used the query from Week 06 to display the meetings with the AA Meetings Category. 
+As the NoSQL database is a different query structure, I currently used the query from [Week 06](https://github.com/lulujordanna/data-structures/tree/master/week06) to display the meetings with the AA Meetings Category. 
 
 ```javascript
 app.get('/process.html', function(req, res) {
@@ -126,6 +128,7 @@ app.get('/process.html', function(req, res) {
     });
 });
 ```
+![Image of process blog data](https://github.com/lulujordanna/data-structures/blob/master/week10/images/process.png)
 
 ## Next Steps 
 While I am proud of my progression with Javascript this week, each of the endpoints highlight that greater aggregation in my data is needed. For AA, I need to join my schedule table to the current query to ensure that each location has the meeting details. For the Sensor data, I need to learn how to aggregate the temperature by hour and day. Finally for the Process blog, I need to learn how to display more than one category at a time. Each has a significant learning curve which I am concerned about in the limited time frame left in the course. 
