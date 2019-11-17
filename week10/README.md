@@ -2,10 +2,10 @@
 The goal of this weekly assignment is to create a web server application in Node.js that will respond to various requests for JSON data for AA meetings, process blog entries, and sensor readings. 
 
 ## Solution  
-Builidng off of previous weekly assignments, I created a web server application that uses Express to load in data from each of the three databases. The outcome does not include html elements or styling yet, it just a representation of the queries to the database. I first loaded in all my dependenices; making the database credentials global variables to account for scoping as my SQL database is used for both the AA data and Sensor data. Once all of the dependenices were loaded in, I created the first express function to build my landing page. 
+Building off of previous weekly assignments, I created a web server application that uses Express to load in data from each of the three databases. The outcome does not include html elements or styling yet, it just a representation of the queries to the database. I first loaded in all my dependencies; making the database credentials global variables to account for scoping as my SQL database is used for both the AA data and Sensor data. Once all of the dependencies were loaded in, I created the first express function to build my landing page. 
 
 ```javascript
-//Dependenices 
+//Dependencies 
 const dotenv = require('dotenv');
 dotenv.config({path: '/home/ec2-user/environment/.env'});
 const { Client } = require('pg');
@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
 ```
 
 ### AA Meetings - SQL 
-To query the database for the AA Meetings, I used a query that Ryan and I wrote which connects a Location ID to a zone ID. Joining these two tables together is cruical in the data mapping of my final project. Once the query is successful, the data is pushed to an array called aaOutput which is the data type sent to the webpage using the express app.get function. 
+To query the database for the AA Meetings, I currently have a query that Ryan and I wrote which connects a Location ID to a zone ID. Joining these two tables together is crucial in the data mapping of my final project. Once the query is successful, the data is pushed to an array called aaOutput which is the data type sent to the webpage using the express app.get function. 
 
 ```javascript
 var aaOutput = []
@@ -69,7 +69,7 @@ client.query(firstQuery, (err, res) => {
 ```
 
 ### Sensor - SQL 
-As the Sensor data also uses a SQL database the process and Javascript was similar to the AA Meetings. I currently have 
+As the Sensor data also uses a SQL database the process and Javascript was similar to the AA Meetings. I currently have a query which prints everything from the sensorData table. Ultimately the temperature needs to be aggregated by hour of each day but querying the data this way felt the most applicable then grouping by value or count. 
 
 ```javascript
 var sensorOutput = [];
@@ -79,7 +79,7 @@ app.get('/sensor.html', function(req, res) {
 });
 
 //SQL query for sensor data: 
-var thirdQuery = "SELECT * FROM sensorData;"; // print the number of rows for each sensorValue
+var thirdQuery = "SELECT * FROM sensorData;";
     
     client.query(thirdQuery, (err, res) => {
         if (err) {throw err}
@@ -90,3 +90,42 @@ var thirdQuery = "SELECT * FROM sensorData;"; // print the number of rows for ea
          client.end();
     });
 ```
+
+### Process Blog - NoSQL 
+The NoSQL database is a different query structure. I currently have used the query from Week 06 to display the meetings with the AA Meetings Category. 
+
+```javascript
+app.get('/process.html', function(req, res) {
+    var processOutput = [];
+    var dynamodb = new AWS.DynamoDB();
+    
+    var params = {
+        TableName : "processblog",
+        KeyConditionExpression: "#tp = :categoryName and #dt between :minDate and :maxDate", // the query expression
+        ExpressionAttributeNames: { // name substitution, used for reserved words in DynamoDB
+            "#tp" : "category", 
+            "#dt" : "date"
+        },
+        ExpressionAttributeValues: { // the query values
+            ":categoryName": {S: "AA Meetings"}, 
+            ":minDate": {S: new Date("August 30, 2019").toDateString()},
+            ":maxDate": {S: new Date("December 11, 2019").toDateString()}
+        }
+    };
+    
+    dynamodb.query(params, function(err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            data.Items.forEach(function(item) {
+            processOutput.push(item)
+            });
+         res.send(processOutput);
+        }
+    });
+});
+```
+
+## Next Steps 
+While I am proud of my progression with Javascript this week, each of the endpoints highlight that greater aggregation in my data is needed. For AA, I need to join my schedule table to the current query to ensure that each location has the meeting details. For the Sensor data, I need to learn how to aggregate the temperature by hour and day. Finally for the Process blog, I need to learn how to display more than one category at a time. Each has a significant learning curve which I am concerned about in the limited time frame left in the course. 
