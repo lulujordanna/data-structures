@@ -2,7 +2,7 @@
 The goal of this weekly assignment is to create a web server application in Node.js that will respond to various requests for JSON data for AA meetings, process blog entries, and sensor readings. 
 
 ## Solution  
-Builidng off of previous weekly assignments, I created a web server application that uses Express to load in data from each of the three databases. The outcome does not include html elements or styling yet, it just a representation of the queries to the database. I first loaded in all my dependenices; making the database credentials global variables to account for scoping as my SQL database is used for both the AA data and Sensor data. Once all of the dependenices were loaded, I created the first express function to launch my landing page. 
+Builidng off of previous weekly assignments, I created a web server application that uses Express to load in data from each of the three databases. The outcome does not include html elements or styling yet, it just a representation of the queries to the database. I first loaded in all my dependenices; making the database credentials global variables to account for scoping as my SQL database is used for both the AA data and Sensor data. Once all of the dependenices were loaded in, I created the first express function to build my landing page. 
 
 ```javascript
 //Dependenices 
@@ -39,4 +39,29 @@ app.get('/', function(req, res) {
 ```
 
 ### AA Meetings - SQL 
+```javascript
+var aaOutput = []
 
+app.get('/aa.html', function(req, res) {
+    res.send(aaOutput);
+});
+
+//Current SQL Query for AA meetings
+    var firstQuery = `WITH locationWithZone as (
+                SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
+                FROM locationGeo l
+                )
+                 SELECT l.*, z.*
+                 FROM locationWithZone l
+                 INNER JOIN zoneNames z 
+                    on l.zoneID  = z.zoneID;`;
+
+client.query(firstQuery, (err, res) => {
+    if (err) {throw err}
+    else {
+        aaOutput.push(res.rows);
+        // console.log(aaOutput);
+        // client.end();
+    }
+});
+```
