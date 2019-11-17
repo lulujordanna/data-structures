@@ -15,19 +15,19 @@ const client = new Client(db_credentials);
 client.connect();
 
 // Sample SQL statement to query the entire contents of a table: 
-// var thisQuery = `WITH locationWithZone as (
-//                 SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
-//                 FROM locationGeo l
-//                 )
+var thisQuery = `WITH locationWithZone as (
+                SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
+                FROM locationGeo l
+                )
 
-//                  SELECT l.*, z.*
-//                  FROM locationWithZone l
-//                  INNER JOIN zoneNames z 
-//                     on l.zoneID  = z.zoneID
-//                  WHERE z.zoneName = 'Lower East Side/Soho'
-//                  LIMIT 10;`;
+                 SELECT l.*, z.*
+                 FROM locationWithZone l
+                 INNER JOIN zoneNames z 
+                    on l.zoneID  = z.zoneID
+                 WHERE z.zoneName = 'Lower East Side/Soho'
+                 LIMIT 10;`;
                  
-var thisQuery  = `SELECT * FROM zoneNames;`;  
+// var thisQuery  = `SELECT * FROM zoneNames;`;  
 
 client.query(thisQuery, (err, res) => {
     console.log(err, res.rows);

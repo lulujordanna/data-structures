@@ -64,7 +64,7 @@ app.get('/sensor.html', function(req, res) {
 });
 
 //SQL query for sensor data: 
-var thirdQuery = "SELECT sensorValue, COUNT (*) FROM sensorData GROUP BY sensorValue;"; // print the number of rows for each sensorValue
+var thirdQuery = "SELECT * FROM sensorData;"; // print the number of rows for each sensorValue
     
     client.query(thirdQuery, (err, res) => {
         if (err) {throw err}
