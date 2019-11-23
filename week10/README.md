@@ -2,7 +2,7 @@
 The goal of this weekly assignment is to create a web server application in Node.js that will respond to various requests for JSON data for AA meetings, process blog entries, and sensor readings. 
 
 ## Solution  
-Building off of previous weekly assignments, I created a web server application that uses Express to load in data from each of the three databases. The outcome does not include html elements or styling yet, it just a representation of the queries to the database. I first loaded in all my dependencies; making the database credentials global variables to account for scoping as my SQL database is used for both the AA data and Sensor data. Once all of the dependencies were loaded in, I created the first express function to build my landing page. 
+Building off of previous weekly assignments, I created a web server application that uses Express to load in data from each of the three databases. To see the current live link, [click here](http://52.87.186.251:8080). The outcome does not include html elements or styling yet, it just a representation of the queries to the database. I first loaded in all my dependencies; making the database credentials global variables to account for scoping as my SQL database is used for both the AA data and Sensor data. Once all of the dependencies were loaded in, I created the first express function to build my landing page. 
 
 ```javascript
 //Dependencies 
