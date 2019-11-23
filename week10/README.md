@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
 ```
 
 ### AA Meetings - SQL 
-To query the database for the AA Meetings, I currently have a query that Ryan and I wrote which connects a locationID to a zoneID. Joining these two tables together is crucial in the data mapping of my final project. Once the query is successful, the data is pushed to an array called aaOutput which is the data type sent to the webpage using the express app.get function. 
+To query the database for the AA Meetings, I currently have a query that Ryan and I wrote which connects a the zone, location and schedule tables. Joining these three tables together is crucial in the data mapping of my final project. Once the query is successful, the data is pushed to an array called aaOutput which is the data type sent to the webpage using the express app.get function. While this query outputs all the data I need for the final assignment, as the locationID is joining to the schedule table, there is repeat values for the geographic information. I need to learn how to best aggregate this data so mutliple markers do not appear. 
 
 ```javascript
 var aaOutput = []
@@ -48,15 +48,17 @@ app.get('/aa.html', function(req, res) {
     res.send(aaOutput);
 });
 
-//Current SQL Query for AA meetings
+//SQL Query for AA Meetings
     var firstQuery = `WITH locationWithZone as (
                 SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
-                FROM locationGeo l
-                )
-                 SELECT l.*, z.*
+                FROM locationGeo l)
+                
+                SELECT l.*, z.*, s.*
                  FROM locationWithZone l
                  INNER JOIN zoneNames z 
-                    on l.zoneID  = z.zoneID;`;
+                    on l.zoneID  = z.zoneID
+                 INNER JOIN schedule s 
+                    on l.locationid  = s.locationid;`;
 
 client.query(firstQuery, (err, res) => {
     if (err) {throw err}
@@ -70,19 +72,20 @@ client.query(firstQuery, (err, res) => {
 ![Image of aa data](https://github.com/lulujordanna/data-structures/blob/master/week10/images/aa.png)
 
 ### Sensor - SQL 
-As the Sensor data also uses a SQL database the process and Javascript was similar to the AA Meetings. I currently have a query which prints everything from the sensorData table. Ultimately the temperature needs to be aggregated by hour of each day but querying the data this way felt the most applicable then grouping by value or count. 
+As the Sensor data also uses a SQL database the process and Javascript was similar to the AA Meetings. I wrote a query which converts the time from GMT to EST, extracts the month, day and hour from the timestamp, averages the temperature sensor value and then groups the data by this new information. Thanks to Ryan, I was able to learn about sub-queries which is the core functinality to convert the time. Of all of my endpoints, I feel that this one is in the best shape moving forward. 
 
 ```javascript
-var sensorOutput = [];
-
-app.get('/sensor.html', function(req, res) {
-    res.send(sensorOutput);
-});
-
-//SQL query for sensor data: 
-var thirdQuery = "SELECT * FROM sensorData;";
-    
-    client.query(thirdQuery, (err, res) => {
+var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours' as adjSensorTime, * FROM sensorData)
+                   SELECT
+                        EXTRACT (MONTH FROM adjSensorTime) as sensorMonth, 
+                        EXTRACT (DAY FROM adjSensorTime) as sensorDay,
+                        EXTRACT (HOUR FROM adjSensorTime) as sensorHour, 
+                        AVG(sensorValue::int) as temp_value
+                        FROM newSensorData
+                        GROUP BY sensorMonth, sensorDay, sensorHour
+                        ORDER BY sensorMonth, sensorDay, sensorHour;`;
+   
+    client.query(secondQuery, (err, res) => {
         if (err) {throw err}
         else {
             // console.table(res.rows);
@@ -131,4 +134,4 @@ app.get('/process.html', function(req, res) {
 ![Image of process blog data](https://github.com/lulujordanna/data-structures/blob/master/week10/images/process.png)
 
 ## Next Steps 
-While I am proud of my progression with Javascript this week, each of the endpoints highlight that greater aggregation in my data is needed. For AA, I need to join my schedule table to the current query to ensure that each location has the meeting details. For the Sensor data, I need to learn how to aggregate the temperature by hour and day. Finally for the Process blog, I need to learn how to display more than one category at a time. Each has a significant learning curve which I am concerned about in the limited time frame left in the course. 
+While I am proud of my progression with Javascript this week, each of the endpoints highlight that greater aggregation in my data is needed. For AA, I need to learn how to aggregate based on location so that multiple markers do not appear. For the Process blog, I need to learn how to display more than one category at a time. Each has a significant learning curve which I am concerned about in the limited time frame left in the course. 
