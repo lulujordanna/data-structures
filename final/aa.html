@@ -1,12 +1,38 @@
-<div id="mapid"></div>
+<head>
+<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""/>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,700&display=swap" rel="stylesheet"> 
+</head>
 
-{{#meetingBlock}}
-<h1>{{addressname}}</h1>
-<h3>Zone {{zoneid}}</h3>
-
-{{/meetingBlock}}
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-   crossorigin=""></script>
-<script src='./map.js'></script>
+<body>
+   <h1 class="aaHeader">Alcohol Anonymous: <span style="font-weight:100;">Meeting Finder</span></h1>
+   <hr>
+   
+   <p class="aaDescription">Choose a district below to begin your journey.</p>
+   <main class="grid">
+    <input type="button" value="Financial District"></input>
+    <input type="button" value="Lower East Side/Soho"></input>
+    <input type="button" value="East Village/Chelsea"></input>
+    <input type="button" value="Midtown West"></input>
+    <input type="button" value="Midtown East"></input>
+    <input type="button" value="Upper West Side"></input>
+    <input type="button" value="Upper East Side"></input>
+    <input type="button" value="West Harlem"></input>
+    <input type="button" value="East Harlem"></input>
+    <input type="button" value="Washington Heights" onclick="zone10()"></input>
+   </main>
+  
+   <!--{{#meetingBlock}}-->
+   <!--   <button>{{zonename}}</button>-->
+   <!--{{/meetingBlock}}-->
+   
+   <div id="mapid"></div>
+   
+   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+           integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+           crossorigin=""></script>
+   <script src='./map.js'></script>
+</body>
 

@@ -27,7 +27,7 @@ var thisQuery = `WITH locationWithZone as (
                  WHERE z.zoneName = 'Lower East Side/Soho'
                  LIMIT 10;`;
                  
-// var thisQuery  = `SELECT * FROM zoneNames;`;  
+//var thisQuery  = `SELECT * FROM zoneNames;`;  
 
 client.query(thisQuery, (err, res) => {
     console.log(err, res.rows);
