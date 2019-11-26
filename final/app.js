@@ -33,8 +33,6 @@ app.use(express.static('public'));
 var aaOutput = []
 
 app.get('/aa', function(req, res) {
-    
-    //res.send(aaOutput);
     var aaVariables = {};
     fs.readFile('./aa.html', 'utf8', (error, data) => {
     var template = handlebars.compile(data);
@@ -54,7 +52,7 @@ app.get('/aa', function(req, res) {
                  INNER JOIN zoneNames z 
                     on l.zoneID  = z.zoneID
                  INNER JOIN schedule s 
-                    on l.locationid  = s.locationid;`;
+                    on l.locationid  = s.locationid;`
 
 client.query(firstQuery, (err, res) => {
     if (err) {throw err}
