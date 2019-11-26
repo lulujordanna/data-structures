@@ -52,7 +52,7 @@ hr {
   margin: 25px 0px 50px; 
   }
   
-.grid input {
+.grid button {
   background-color: #f8f8f8;
   border: none;
   color: #000;
@@ -63,3 +63,9 @@ hr {
   font-weight: 300;
   font-size: 14px;
 }
+
+.grid button:hover{
+    background-color:#212121;
+    color: white;
+}
+

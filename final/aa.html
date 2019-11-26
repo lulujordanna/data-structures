@@ -1,33 +1,33 @@
 <head>
-<link rel="stylesheet" href="./styles.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-      crossorigin=""/>
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,700&display=swap" rel="stylesheet"> 
 </head>
 
 <body>
    <h1 class="aaHeader">Alcohol Anonymous: <span style="font-weight:100;">Meeting Finder</span></h1>
    <hr>
-   
    <p class="aaDescription">Choose a district below to begin your journey.</p>
    <main class="grid">
-    <input type="button" value="Financial District"></input>
-    <input type="button" value="Lower East Side/Soho"></input>
-    <input type="button" value="East Village/Chelsea"></input>
-    <input type="button" value="Midtown West"></input>
-    <input type="button" value="Midtown East"></input>
-    <input type="button" value="Upper West Side"></input>
-    <input type="button" value="Upper East Side"></input>
-    <input type="button" value="West Harlem"></input>
-    <input type="button" value="East Harlem"></input>
-    <input type="button" value="Washington Heights" onclick="zone10()"></input>
+        <button onclick="panToZone([40.711049, -74.010158])">Financial District</button> 
+        <button onclick="panToZone([40.719861, -73.992436])">Lower East Side/Soho</button>
+        <button onclick="panToZone([40.742475, -73.991749])">East Village/Chelsea</button>
+        <button onclick="panToZone([40.762608, -73.993294])">Midtown West</button>
+        <button onclick="panToZone([40.755956, -73.970591])">Midtown East</button>
+        <button onclick="panToZone([40.783849, -73.979849])">Upper West Side</button>
+        <button onclick="panToZone([40.774687, -73.958077])">Upper East Side</button>
+        <button onclick="panToZone([40.819758, -73.954165])">West Harlem</button>
+        <button onclick="panToZone([40.797379, -73.940533])">East Harlem</button>
+        <button onclick="panToZone([40.842558, -73.939622])">Washington Heights</button>
    </main>
-    <div id="mapid"></div>
+   <div id="mapid"></div>
 
    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-           crossorigin=""></script>
+           crossorigin="">
+   </script>
    <script>
     var data = [
        {{#meetingBlock}}
@@ -35,8 +35,8 @@
         long:"{{long}}"},
    {{/meetingBlock}}];
    
-      var L; 
-      var mymap = L.map('mapid').setView([40.766438, -73.977748], 12);
+    var L; 
+    var mymap = L.map('mapid').setView([40.766438, -73.977748], 14);
             
             L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
         	attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
@@ -45,13 +45,14 @@
         	accessToken: 'pk.eyJ1IjoibHVsdWpvcmRhbm5hIiwiYSI6ImNrMzdsZ3U4bzAwMHUzcXBnNHB1dWlyNmwifQ.aFToIlZE5xfbmHl2qJ1tHA'
         }).addTo(mymap);
         
-        for (var i=0; i<data.length; i++) {
-        L.marker( [data[i].lat, data[i].long] ).addTo(mymap);
-        
-        function zone10() {
-          L.map('mapid').setView([40.766438, -73.977748], 14)
-        }
+    for (var i=0; i<data.length; i++) {
+        L.marker([data[i].lat, data[i].long]).bindPopup(data[i].lat).addTo(mymap);
     }
-   </script>
+    
+    function panToZone(coords) {
+          mymap.panTo(coords); 
+        }
+        
+</script>
 </body>
 
