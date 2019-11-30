@@ -43,16 +43,21 @@ app.get('/aa', function(req, res) {
 });
 
 //SQL Query for AA Meetings
-    var firstQuery = `WITH locationWithZone as (
+       var firstQuery = `WITH locationWithZone AS (
                 SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
-                FROM locationGeo l)
+                FROM locationGeo l),
 
+ allAAData AS (
                 SELECT l.*, z.*, s.*
                  FROM locationWithZone l
                  INNER JOIN zoneNames z 
                     on l.zoneID  = z.zoneID
                  INNER JOIN schedule s 
-                    on l.locationid  = s.locationid;`
+                    on l.locationid  = s.locationid)
+
+SELECT lat, long, json_agg(json_build_object('Location', addressname, 'Address', address, 'Start Time', meetingstarttime, 'End Time', meetingendtime, 'Day', meetingday, 'Types', meetingtype, 'Special Interest', meetingspecialinterest)) as meetings 
+FROM allAAData 
+GROUP BY lat, long;`;
 
 client.query(firstQuery, (err, res) => {
     if (err) {throw err}
@@ -71,7 +76,6 @@ app.get('/sensor', function(req, res) {
 
 //SQL Query for Sensor Data
 var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours' as adjSensorTime, * FROM sensorData)
-
                    SELECT
                         EXTRACT (MONTH FROM adjSensorTime) as sensorMonth, 
                         EXTRACT (DAY FROM adjSensorTime) as sensorDay,

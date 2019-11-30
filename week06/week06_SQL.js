@@ -16,9 +16,24 @@ const client = new Client(db_credentials);
 client.connect();
 
 // SQL statement to query address information
-var thisQuery = "SELECT address, lat, long FROM locationGeo;"; 
+    var firstQuery = `WITH locationWithZone AS (
+                SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
+                FROM locationGeo l),
 
-client.query(thisQuery, (err, res) => {
+ allAAData AS (
+                SELECT l.*, z.*, s.*
+                 FROM locationWithZone l
+                 INNER JOIN zoneNames z 
+                    on l.zoneID  = z.zoneID
+                 INNER JOIN schedule s 
+                    on l.locationid  = s.locationid)
+
+SELECT lat, long, json_agg(json_build_object('Location', addressname, 'Address', address, 'Start Time', meetingstarttime, 'End Time', meetingendtime, 'Day', meetingday, 'Types', meetingtype, 'Special Interest', meetingspecialinterest)) as meetings 
+FROM allAAData 
+GROUP BY lat, long;`;
+
+
+client.query(firstQuery, (err, res) => {
     if (err) {throw err}
     else {
         console.table(res.rows);

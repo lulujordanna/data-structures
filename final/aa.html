@@ -32,7 +32,8 @@
     var data = [
        {{#meetingBlock}}
         {lat:"{{lat}}",
-        long:"{{long}}"},
+        long:"{{long}}",
+        meetings:"{{meetings}}"},
    {{/meetingBlock}}];
    
     var L; 
@@ -40,17 +41,20 @@
             
             L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
         	attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
-        	minZoom: 1,
-        	maxZoom: 19, 
+        	minZoom: 12,
+        	maxZoom: 16, 
+        	fitBounds: ([[40.712, -74.227],[40.774, -74.125]]),
         	accessToken: 'pk.eyJ1IjoibHVsdWpvcmRhbm5hIiwiYSI6ImNrMzdsZ3U4bzAwMHUzcXBnNHB1dWlyNmwifQ.aFToIlZE5xfbmHl2qJ1tHA'
         }).addTo(mymap);
         
     for (var i=0; i<data.length; i++) {
-        L.marker([data[i].lat, data[i].long]).bindPopup(data[i].lat).addTo(mymap);
+        var meetings = JSON.stringify(data[i].meetings)
+        L.marker([data[i].lat, data[i].long]).bindPopup(meetings).addTo(mymap);
+        console.log(meetings)
     }
     
     function panToZone(coords) {
-          mymap.panTo(coords); 
+          mymap.panTo(coords, {animate: true}); 
         }
         
 </script>
