@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
 <head>
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -7,7 +10,7 @@
 </head>
 
 <body>
-   <h1 class="Header">Alcohol Anonymous: <span style="font-weight:100;">Meeting Finder</span></h1>
+   <h1 class="header">Alcohol Anonymous: <span style="font-weight:100;">Meeting Finder</span></h1>
    <hr>
    <p class="aaDescription">Choose a district below to begin your journey.</p>
    <main class="aaGrid">
@@ -44,12 +47,12 @@
             }).addTo(mymap);
             
         for (var i=0; i<data.length; i++) {
-            var meetings = JSON.stringify(data[i].meetings)
-            L.marker([data[i].lat, data[i].long]).bindPopup(meetings).addTo(mymap);
+             var meetings = JSON.stringify(data[i].meetings)
+             L.marker([data[i].lat, data[i].long]).bindPopup(meetings).addTo(mymap);
         }
-        
+
         function panToZone(coords) {
-              mymap.panTo(coords, {animate: true}); 
+              mymap.panTo(coords); 
         }
     </script>
 </body>

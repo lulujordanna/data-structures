@@ -26,10 +26,10 @@ const fs = require('fs');
 const indexSource = fs.readFileSync("aa.html").toString();
 var template = handlebars.compile(indexSource, { strict: true });
 
-const indexSource2 = fs.readFileSync("process.html").toString();
+const indexSource2 = fs.readFileSync("sensor.html").toString();
 var template2 = handlebars.compile(indexSource2, { strict: true });
 
-const indexSource3 = fs.readFileSync("sensor.html").toString();
+const indexSource3 = fs.readFileSync("process.html").toString();
 var template3 = handlebars.compile(indexSource3, { strict: true });
 
 
@@ -83,7 +83,7 @@ var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours'
     client.query(secondQuery, (qerr, qres) => {
         if (qerr) {throw qerr}
         else {
-            res.end(template3({sensorData: JSON.stringify(qres.rows)}));
+            res.end(template2({sensorData: JSON.stringify(qres.rows)}));
             client.end();
         }
   });

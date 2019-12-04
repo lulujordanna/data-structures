@@ -10,7 +10,7 @@ h1 {
     font-size: 40px; 
 }
 
-.Header{
+.header{
     margin-bottom: -3px; 
 }
 
@@ -32,7 +32,14 @@ li {
 }
 
 /* DIVS/SECTIONS */
-#mapid { height: 600px; }
+#mapid { height: 600px;}
+#sensorGraph{ height: 400px;}
+
+/*.leaflet-popup-content {*/
+/*    font-family: 'Noto Sans KR', sans-serif;*/
+/*    font-weight: 300;*/
+/*    font-size: 13px;*/
+/*}*/
 
 
 /* LINE BREAKS */
