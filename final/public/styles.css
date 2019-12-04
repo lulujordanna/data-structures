@@ -2,6 +2,7 @@ body{
     padding: 50px; 
     margin: 0px; 
 }
+
 /* TYPOGRAPHY */
 h1 {
     font-family: 'Noto Sans KR', sans-serif;
@@ -9,19 +10,18 @@ h1 {
     font-size: 40px; 
 }
 
-.aaHeader{
+.Header{
     margin-bottom: -3px; 
 }
 
 p {
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 16px; 
 }
 
 .aaDescription{
-    font-weight: 300;
-    margin: 40px 0px 5px;
+    margin: 35px 0px 5px;
 }
 
 li {
@@ -44,7 +44,7 @@ hr {
 }
 
 /* BUTTONS */
-.grid { 
+.aaGrid { 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 20px;
@@ -52,7 +52,7 @@ hr {
   margin: 25px 0px 50px; 
   }
   
-.grid button {
+.aaGrid button {
   background-color: #f8f8f8;
   border: none;
   color: #000;
@@ -64,8 +64,20 @@ hr {
   font-size: 14px;
 }
 
-.grid button:hover{
+.aaGrid button:hover{
     background-color:#212121;
     color: white;
 }
 
+
+.sensorGrid { 
+  display: flex;
+  justify-content: flex-start; 
+  flex-direction: row;  
+  }
+  
+.sensorGrid p{
+    display:inline-block;
+    width: 60vw;
+    flex-shrink: 0;
+}

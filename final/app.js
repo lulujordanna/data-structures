@@ -1,42 +1,40 @@
 //Dependenices 
 const dotenv = require('dotenv');
 dotenv.config({path: '/home/ec2-user/environment/.env'});
-const { Client } = require('pg');
-var async = require('async');
+const { Pool } = require('pg');
 var express = require('express'),
     app = express();
 
-const handlebars = require('handlebars')
-const fs = require('fs')
+const handlebars = require('handlebars'); 
+const fs = require('fs'); 
 
 //SQL dependencies
  var db_credentials = new Object();
-    db_credentials.user = process.env.AWSRDS_USER;
-    db_credentials.host = process.env.AWSRDS_HOST;
-    db_credentials.database = process.env.AWSRDS_DBNAME;
-    db_credentials.password = process.env.AWSRDS_PW;
-    db_credentials.port = 5432;
+     db_credentials.user = process.env.AWSRDS_USER;
+     db_credentials.host = process.env.AWSRDS_HOST;
+     db_credentials.database = process.env.AWSRDS_DBNAME;
+     db_credentials.password = process.env.AWSRDS_PW;
+     db_credentials.port = 5432;
 
-    const client = new Client(db_credentials);
+    const client = new Pool(db_credentials);
     client.connect();
 
 //DyanmoDB dependencies
 var AWS = require('aws-sdk');
-AWS.config = new AWS.Config();
-AWS.config.region = "us-east-1";
+    AWS.config = new AWS.Config();
+    AWS.config.region = "us-east-1";
 
 app.use(express.static('public'));
 
 
-
 ////////////////////////////////
-var aaOutput = []
+var aaOutput = []; 
 
 app.get('/aa', function(req, res) {
     var aaVariables = {};
     fs.readFile('./aa.html', 'utf8', (error, data) => {
     var template = handlebars.compile(data);
-    aaVariables.meetingBlock = aaOutput[0]
+    aaVariables.meetingBlock = aaOutput[0]; 
     var html = template(aaVariables);
     res.send(html);
     });
@@ -47,7 +45,7 @@ app.get('/aa', function(req, res) {
                 SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
                 FROM locationGeo l),
 
- allAAData AS (
+            allAAData AS (
                 SELECT l.*, z.*, s.*
                  FROM locationWithZone l
                  INNER JOIN zoneNames z 
@@ -55,9 +53,9 @@ app.get('/aa', function(req, res) {
                  INNER JOIN schedule s 
                     on l.locationid  = s.locationid)
 
-SELECT lat, long, json_agg(json_build_object('Location', addressname, 'Address', address, 'Start Time', meetingstarttime, 'End Time', meetingendtime, 'Day', meetingday, 'Types', meetingtype, 'Special Interest', meetingspecialinterest)) as meetings 
-FROM allAAData 
-GROUP BY lat, long;`;
+            SELECT lat, long, json_agg(json_build_object('Location', addressname, 'Address', address, 'Neighborhood', zonename, 'Start Time', meetingstarttime, 'End Time', meetingendtime, 'Day', meetingday, 'Types', meetingtype, 'Special Interest', meetingspecialinterest)) as meetings 
+            FROM allAAData 
+            GROUP BY lat, long;`;
 
 client.query(firstQuery, (err, res) => {
     if (err) {throw err}
@@ -71,7 +69,13 @@ client.query(firstQuery, (err, res) => {
 var sensorOutput = [];
 
 app.get('/sensor', function(req, res) {
-    res.send(sensorOutput);
+    var sensorVariables = {};
+    fs.readFile('./sensor.html', 'utf8', (error, data) => {
+    var template2 = handlebars.compile(data);
+    // sensorVariables.meetingBlock = sensorOutput[0]
+    var html2 = template2(sensorVariables);
+    res.send(html2);
+    });
 });
 
 //SQL Query for Sensor Data
