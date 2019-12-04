@@ -30,12 +30,7 @@
    </script>
    
    <script>
-        var data = [
-           {{#meetingBlock}}
-            {lat:"{{lat}}",
-            long:"{{long}}",
-            meetings:"{{meetings}}"},
-       {{/meetingBlock}}];
+        var data = {{{aaData}}};
        
         var L; 
         var mymap = L.map('mapid').setView([40.766438, -73.977748], 14);

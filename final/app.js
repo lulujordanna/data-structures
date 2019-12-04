@@ -4,9 +4,7 @@ dotenv.config({path: '/home/ec2-user/environment/.env'});
 const { Pool } = require('pg');
 var express = require('express'),
     app = express();
-
-const handlebars = require('handlebars'); 
-const fs = require('fs'); 
+    app.use(express.static('public'));
 
 //SQL dependencies
  var db_credentials = new Object();
@@ -16,32 +14,32 @@ const fs = require('fs');
      db_credentials.password = process.env.AWSRDS_PW;
      db_credentials.port = 5432;
 
-    const client = new Pool(db_credentials);
-    client.connect();
-
 //DyanmoDB dependencies
 var AWS = require('aws-sdk');
     AWS.config = new AWS.Config();
     AWS.config.region = "us-east-1";
 
-app.use(express.static('public'));
+//Handlebar dependencies
+const handlebars = require('handlebars'); 
+const fs = require('fs'); 
+
+const indexSource = fs.readFileSync("aa.html").toString();
+var template = handlebars.compile(indexSource, { strict: true });
+
+const indexSource2 = fs.readFileSync("process.html").toString();
+var template2 = handlebars.compile(indexSource2, { strict: true });
+
+const indexSource3 = fs.readFileSync("sensor.html").toString();
+var template3 = handlebars.compile(indexSource3, { strict: true });
 
 
 ////////////////////////////////
-var aaOutput = []; 
-
 app.get('/aa', function(req, res) {
-    var aaVariables = {};
-    fs.readFile('./aa.html', 'utf8', (error, data) => {
-    var template = handlebars.compile(data);
-    aaVariables.meetingBlock = aaOutput[0]; 
-    var html = template(aaVariables);
-    res.send(html);
-    });
-});
-
+    
+    const client = new Pool(db_credentials);
+                       client.connect();
 //SQL Query for AA Meetings
-       var firstQuery = `WITH locationWithZone AS (
+    var firstQuery = `WITH locationWithZone AS (
                 SELECT *, SPLIT_PART(l.locationid,'_',1) as zoneID
                 FROM locationGeo l),
 
@@ -57,30 +55,22 @@ app.get('/aa', function(req, res) {
             FROM allAAData 
             GROUP BY lat, long;`;
 
-client.query(firstQuery, (err, res) => {
-    if (err) {throw err}
+client.query(firstQuery, (qerr, qres) => {
+    if (qerr) {throw qerr}
     else {
-        aaOutput.push(res.rows);
-        // console.log(aaOutput);
-        // client.end();
+        res.end(template({aaData: JSON.stringify(qres.rows)}));
+        client.end();
     }
+  });
 });
 //////////////////////////////////
-var sensorOutput = [];
-
 app.get('/sensor', function(req, res) {
-    var sensorVariables = {};
-    fs.readFile('./sensor.html', 'utf8', (error, data) => {
-    var template2 = handlebars.compile(data);
-    // sensorVariables.meetingBlock = sensorOutput[0]
-    var html2 = template2(sensorVariables);
-    res.send(html2);
-    });
-});
+
+const client = new Pool(db_credentials);
 
 //SQL Query for Sensor Data
 var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours' as adjSensorTime, * FROM sensorData)
-                   SELECT
+                  SELECT
                         EXTRACT (MONTH FROM adjSensorTime) as sensorMonth, 
                         EXTRACT (DAY FROM adjSensorTime) as sensorDay,
                         EXTRACT (HOUR FROM adjSensorTime) as sensorHour, 
@@ -89,14 +79,15 @@ var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours'
                         GROUP BY sensorMonth, sensorDay, sensorHour
                         ORDER BY sensorMonth, sensorDay, sensorHour;`;
    
-    client.query(secondQuery, (err, res) => {
-        if (err) {throw err}
+    client.connect();
+    client.query(secondQuery, (qerr, qres) => {
+        if (qerr) {throw qerr}
         else {
-            // console.table(res.rows);
-            sensorOutput.push(res.rows);
+            res.end(template3({sensorData: JSON.stringify(qres.rows)}));
+            client.end();
         }
-         client.end();
-    });
+  });
+});
 //////////////////////////////////
 
 app.get('/process', function(req, res) {
@@ -121,7 +112,7 @@ app.get('/process', function(req, res) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
-            console.log("Query succeeded.");
+            // console.log("Query succeeded.");
             data.Items.forEach(function(item) {
             processOutput.push(item)
             });
