@@ -33,7 +33,7 @@ app.get('/', function(req, res) {
 ////////////////////////////////
 var aaOutput = []
 
-app.get('/aa.html', function(req, res) {
+app.get('/aa', function(req, res) {
     res.send(aaOutput);
 });
 
@@ -61,7 +61,7 @@ client.query(firstQuery, (err, res) => {
 //////////////////////////////////
 var sensorOutput = [];
 
-app.get('/sensor.html', function(req, res) {
+app.get('/sensor', function(req, res) {
     res.send(sensorOutput);
 });
 
@@ -87,7 +87,7 @@ var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours'
     });
 //////////////////////////////////
 
-app.get('/process.html', function(req, res) {
+app.get('/process', function(req, res) {
     var processOutput = [];
     var dynamodb = new AWS.DynamoDB();
     

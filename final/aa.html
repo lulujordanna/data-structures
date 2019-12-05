@@ -12,7 +12,7 @@
 <body>
    <h1 class="header">Alcohol Anonymous: <span style="font-weight:100;">Meeting Finder</span></h1>
    <hr>
-   <p class="aaDescription">Choose a district below to begin your journey.</p>
+   <p class="aaDescription">Choose neighborhood below to filter the meetings.</p>
    <main class="aaGrid">
         <button onclick="panToZone([40.711049, -74.010158], 'Financial District')">Financial District</button> 
         <button onclick="panToZone([40.719861, -73.992436], 'Lower East Side/Soho')">Lower East Side/Soho</button>
@@ -54,14 +54,21 @@
             markers.clearLayers(); 
             
              for (var i=0; i<data.length; i++) {
-             //var meetings = JSON.stringify(data[i])
-                 var meetings = `<h1>${data[i].addressname}</h1>
-                                 <p>${data[i].address}</p>`
-                 for (var x=0; x<data[i]['meetings'].length; x++){
-                     meetings += `<br> Start Time: ${data[i].meetings[x]['Start Time']} End Time: ${data[i].meetings[x]['End Time']}
-                     <br> Day: ${data[i].meetings[x]['Day']} <br> `
+                  var meetings = `<h2>${data[i].address}</h2> 
+                                  <p>${data[i].addressname}</p>
+                                  <p>${data[i].zonename}</p>`
+                                 
+                  for (var x=0; x<data[i]['meetings'].length; x++){
+                     meetings += `<br>Day: ${data[i].meetings[x]['Day']}
+                                  <br>Time: ${data[i].meetings[x]['Start Time']} - ${data[i].meetings[x]['End Time']}
+                                  <br>Meeting Type: ${data[i].meetings[x]['Types']}<br>`
+                                  
+                                  if(data[i].meetings[x]['Special Interest'] != null){
+                                    meetings += `<br>Special Interest: ${data[i].meetings[x]['Special Interest']}<br>`
+                                  }
                  };
-                 L.marker([data[i].lat, data[i].long]).bindPopup(meetings).addTo(markers);
+                 
+                L.marker([data[i].lat, data[i].long]).bindPopup(meetings, {maxHeight: 300}).addTo(markers);
             }
         }
 
