@@ -14,16 +14,16 @@
    <hr>
    <p class="aaDescription">Choose a district below to begin your journey.</p>
    <main class="aaGrid">
-        <button onclick="panToZone([40.711049, -74.010158])">Financial District</button> 
-        <button onclick="panToZone([40.719861, -73.992436])">Lower East Side/Soho</button>
-        <button onclick="panToZone([40.742475, -73.991749])">East Village/Chelsea</button>
-        <button onclick="panToZone([40.762608, -73.993294])">Midtown West</button>
-        <button onclick="panToZone([40.755956, -73.970591])">Midtown East</button>
-        <button onclick="panToZone([40.783849, -73.979849])">Upper West Side</button>
-        <button onclick="panToZone([40.774687, -73.958077])">Upper East Side</button>
-        <button onclick="panToZone([40.819758, -73.954165])">West Harlem</button>
-        <button onclick="panToZone([40.797379, -73.940533])">East Harlem</button>
-        <button onclick="panToZone([40.842558, -73.939622])">Washington Heights</button>
+        <button onclick="panToZone([40.711049, -74.010158], 'Financial District')">Financial District</button> 
+        <button onclick="panToZone([40.719861, -73.992436], 'Lower East Side/Soho')">Lower East Side/Soho</button>
+        <button onclick="panToZone([40.742475, -73.991749], 'East Village/Chelsea')">East Village/Chelsea</button>
+        <button onclick="panToZone([40.762608, -73.993294], 'Midtown West')">Midtown West</button>
+        <button onclick="panToZone([40.755956, -73.970591], 'Midtown East')">Midtown East</button>
+        <button onclick="panToZone([40.783849, -73.979849], 'Upper West Side')">Upper West Side</button>
+        <button onclick="panToZone([40.774687, -73.958077], 'Upper East Side')">Upper East Side</button>
+        <button onclick="panToZone([40.819758, -73.954165], 'West Harlem')">West Harlem</button>
+        <button onclick="panToZone([40.797379, -73.940533], 'East Harlem')">East Harlem</button>
+        <button onclick="panToZone([40.842558, -73.939622], 'Washington Heights')">Washington Heights</button>
    </main>
    <div id="mapid"></div>
 
@@ -33,8 +33,9 @@
    </script>
    
    <script>
-        var data = {{{aaData}}};
-       
+        var originaldata = {{{aaData}}};
+        var data = originaldata;
+        
         var L; 
         var mymap = L.map('mapid').setView([40.766438, -73.977748], 14);
                 
@@ -46,13 +47,28 @@
             	accessToken: 'pk.eyJ1IjoibHVsdWpvcmRhbm5hIiwiYSI6ImNrMzdsZ3U4bzAwMHUzcXBnNHB1dWlyNmwifQ.aFToIlZE5xfbmHl2qJ1tHA'
             }).addTo(mymap);
             
-        for (var i=0; i<data.length; i++) {
-             var meetings = JSON.stringify(data[i].meetings)
-             L.marker([data[i].lat, data[i].long]).bindPopup(meetings).addTo(mymap);
+            var markers = L.layerGroup().addTo(mymap); 
+            makeMarkers(); 
+    
+        function makeMarkers(){
+            markers.clearLayers(); 
+            
+             for (var i=0; i<data.length; i++) {
+             //var meetings = JSON.stringify(data[i])
+                 var meetings = `<h1>${data[i].addressname}</h1>
+                                 <p>${data[i].address}</p>`
+                 for (var x=0; x<data[i]['meetings'].length; x++){
+                     meetings += `<br> Start Time: ${data[i].meetings[x]['Start Time']} End Time: ${data[i].meetings[x]['End Time']}
+                     <br> Day: ${data[i].meetings[x]['Day']} <br> `
+                 };
+                 L.marker([data[i].lat, data[i].long]).bindPopup(meetings).addTo(markers);
+            }
         }
 
-        function panToZone(coords) {
-              mymap.panTo(coords); 
+        function panToZone(coords, name) {
+            data = originaldata.filter(d => d.zonename == name)
+            makeMarkers()
+            mymap.panTo(coords); 
         }
     </script>
 </body>
