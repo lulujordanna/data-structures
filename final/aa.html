@@ -37,13 +37,14 @@
         var data = originaldata;
         
         var L; 
-        var mymap = L.map('mapid').setView([40.766438, -73.977748], 14);
+        var mymap = L.map('mapid',{scrollWheelZoom: false }).setView([40.766438, -73.977748], 14);
                 
                 L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
             	attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
             	minZoom: 12,
             	maxZoom: 16, 
             	fitBounds: ([[40.712, -74.227],[40.774, -74.125]]),
+            	scrollWheelZoom: false, 
             	accessToken: 'pk.eyJ1IjoibHVsdWpvcmRhbm5hIiwiYSI6ImNrMzdsZ3U4bzAwMHUzcXBnNHB1dWlyNmwifQ.aFToIlZE5xfbmHl2qJ1tHA'
             }).addTo(mymap);
             

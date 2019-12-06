@@ -10,14 +10,25 @@
    <h1 class="header"><span style="color:#6daaa5;">Cool November:</span> <span style="font-weight:100;">A Temperature Visualization</span></h1>
    <hr>
    
-   <div class="sensorGrid">
-      <p>With the notorious New York City heating regulations, finding the perfect temperature in one&apos;s bedroom during the winter can be a difficult task. I began running my air conditioner to combat the heating in my unit. This visualization records the average hourly temperature of my bedroom over the course of a month and highlights when the air conditioner is running to highlight electricity waste. </p>
+   <div class="sensorflex">
+      <p class="sensorDescription">With the notorious New York City heating regulations, finding the perfect temperature in one&apos;s bedroom during the winter can be a difficult task. I began running my air conditioner to combat the heating in my unit. This visualization records the average hourly temperature of my bedroom over the course of a month and highlights when the air conditioner is running to highlight electricity waste. </p>
    </div>
    
    <section id="sensorGraph"></section>
    
+   <section id="findings">
+       <h3>Key Findings</h3>
+       <!--<p>paragraph</p>-->
+       <div class="sensorGrid">
+           <img src="image.png" alt="Total hours of AC running">
+           <img src="image2.png" alt="Daily average of AC running">
+           <!--<img src="image2.png" alt="Daily average of AC running">-->
+       </div>
+   </section>
+   
    <script src="https://d3js.org/d3.v4.js"></script>
    <script> 
+   
    var data ={{{sensorData}}}
    
    // set the dimensions and margins of the graph
@@ -38,10 +49,10 @@
    
    function draw(){
    
-   //Mapping data from SQL query to d3
-     data = data.map(function(d){
-       return { date : d3.timeParse("%Y-%m-%dT%H")(d.sensoryear + '-' + d.sensormonth + '-' + d.sensorday + 'T' + d.sensorhour), value : d.temp_value }
-     })
+      //Mapping data from SQL query to d3
+        data = data.map(function(d){
+          return { date : d3.timeParse("%Y-%m-%dT%H")(d.sensoryear + '-' + d.sensormonth + '-' + d.sensorday + 'T' + d.sensorhour), value : d.temp_value }
+        })
      
        // X axis
        var x = d3.scaleTime()
@@ -72,13 +83,12 @@
        //The benchmark line
        svg.append("line")    
           .attr("x1", 0)
-          .attr("y1", 95)
-          .attr("x2", 1150)
-          .attr("y2", 95)
+          .attr("y1", 94.5)
+          .attr("x2", width)
+          .attr("y2", 94.5)
           .attr("stroke", "#6daaa5")
           .attr("stroke-width", 1) 
           .attr("stroke-dasharray", ("3, 3"));
    }
-   
    </script>
 </body>
