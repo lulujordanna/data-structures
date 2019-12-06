@@ -64,7 +64,7 @@
                                   <br>Meeting Type: ${data[i].meetings[x]['Types']}<br>`
                                   
                                   if(data[i].meetings[x]['Special Interest'] != null){
-                                    meetings += `<br>Special Interest: ${data[i].meetings[x]['Special Interest']}<br>`
+                                    meetings += `Special Interest: ${data[i].meetings[x]['Special Interest']}<br>`
                                   }
                  };
                  
@@ -75,7 +75,7 @@
         function panToZone(coords, name) {
             data = originaldata.filter(d => d.zonename == name)
             makeMarkers()
-            mymap.panTo(coords); 
+            mymap.panTo(coords, {animate: true, duration: 0.5}); 
         }
     </script>
 </body>

@@ -1,5 +1,5 @@
 body{
-    padding: 50px; 
+    padding: 50px;  
     margin: 0px; 
 }
 
@@ -48,6 +48,10 @@ li {
     font-size: 13px;
 }
 
+/*.leaflet-popup-content p {*/
+/*    margin: 0px 0;*/
+/*}*/
+
 
 /* LINE BREAKS */
 hr { 
@@ -57,7 +61,7 @@ hr {
     border-width: 0.5px;
 }
 
-/* BUTTONS */
+/* BUTTONS/GRIDS */
 .aaGrid { 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -83,6 +87,9 @@ hr {
     color: white;
 }
 
+/*.aaGrid button:focus{*/
+/*  background-color: #212121;*/
+/*}*/
 
 .sensorGrid { 
   display: flex;
@@ -95,3 +102,19 @@ hr {
     width: 60vw;
     flex-shrink: 0;
 }
+
+/* SENSOR SVG */
+.domain {
+    stroke: #dbdbdb;
+  }
+ 
+  .tick line {
+    stroke: #dbdbdb;
+  }
+  
+  .tick text {
+    fill: #6c6c6c;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10px; 
+    shape-rendering: crispEdges;
+  }
