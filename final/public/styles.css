@@ -25,6 +25,7 @@ h3 {
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
     font-size: 30px;
+    margin-bottom: 0px;
 }
 
 p {
@@ -42,13 +43,6 @@ p {
     margin: 0px;
 }
 
-li {
-    margin-top: 20px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
-    font-size: 16px; 
-}
-
 /* DIVS/SECTIONS */
 #mapid { 
     height: 450px;
@@ -56,7 +50,7 @@ li {
 
 #sensorGraph{ 
     height: 400px;
-    padding: 10px 50px;
+    padding: 30px 50px;
 }
 
 #findings{
