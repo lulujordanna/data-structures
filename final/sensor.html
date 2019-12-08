@@ -45,8 +45,8 @@
        .attr("transform",
              "translate(" + margin.left + "," + margin.top + ")");
             
-  var dataAC; 
    
+   var dataAC; 
    d3.json("./sensor.JSON", function(dataAc) {
 
         dataAC = dataAc.map(function(d){
@@ -58,15 +58,13 @@
        
    });
        
+   
    function draw(){
    
       //Mapping data from SQL query to d3
        data = data.map(function(d){
           return { date : d3.timeParse("%Y-%m-%dT%H")(d.sensoryear + '-' + d.sensormonth + '-' + d.sensorday + 'T' + d.sensorhour), value : d.temp_value }
         })
-    
-      width = window.innerWidth - margin.left - margin.right; 
-      svg.attr('width', width+ margin.left + margin.right)
 
        // X axis
        var x = d3.scaleTime()
@@ -83,7 +81,8 @@
        svg.append("g")
          .call(d3.axisLeft(y));
          
-        svg.selectAll('.ac')
+       // AC usage
+       svg.selectAll('.ac')
             .data(dataAC)
             .enter()
             .append("rect")
@@ -92,9 +91,9 @@
             .attr("width", (d) => x(d.dateend)- x(d.datestart))
             .attr("height", height)
             .attr('fill','#6daaa5')
-            .attr('opacity', 0.2);
+            .attr('opacity', 0.15);
    
-       // The line
+       // The line graph
        svg.append("path")
          .datum(data)
          .attr("fill", "none")
@@ -104,7 +103,6 @@
            .x(function(d) { return x(d.date) })
            .y(function(d) { return y(d.value) })
            )
-           
            
        
        //The benchmark line
