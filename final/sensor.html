@@ -28,7 +28,7 @@
    
    <script src="https://d3js.org/d3.v4.js"></script>
    <script> 
-   
+
    var data ={{{sensorData}}}
    
    // set the dimensions and margins of the graph
@@ -44,16 +44,30 @@
      .append("g")
        .attr("transform",
              "translate(" + margin.left + "," + margin.top + ")");
+            
+  var dataAC; 
    
-   draw(); 
-   
+   d3.json("./sensor.JSON", function(dataAc) {
+
+        dataAC = dataAc.map(function(d){
+          return { datestart : d3.timeParse("%Y-%m-%dT%H:%M:%S")(d.day + 'T' + d.start), dateend : d3.timeParse("%Y-%m-%dT%H:%M:%S")(d.day + 'T' + d.end), value : d.entry }
+        })
+        console.log(dataAC)
+
+       draw(); 
+       
+   });
+       
    function draw(){
    
       //Mapping data from SQL query to d3
-        data = data.map(function(d){
+       data = data.map(function(d){
           return { date : d3.timeParse("%Y-%m-%dT%H")(d.sensoryear + '-' + d.sensormonth + '-' + d.sensorday + 'T' + d.sensorhour), value : d.temp_value }
         })
-     
+    
+      width = window.innerWidth - margin.left - margin.right; 
+      svg.attr('width', width+ margin.left + margin.right)
+
        // X axis
        var x = d3.scaleTime()
          .domain(d3.extent(data, function(d) { return d.date; }))
@@ -68,6 +82,17 @@
          .range([ height, 0 ]);
        svg.append("g")
          .call(d3.axisLeft(y));
+         
+        svg.selectAll('.ac')
+            .data(dataAC)
+            .enter()
+            .append("rect")
+            .attr("x", (d) => x(d.datestart))
+            .attr("y", 0)
+            .attr("width", (d) => x(d.dateend)- x(d.datestart))
+            .attr("height", height)
+            .attr('fill','#6daaa5')
+            .attr('opacity', 0.2);
    
        // The line
        svg.append("path")
@@ -79,6 +104,8 @@
            .x(function(d) { return x(d.date) })
            .y(function(d) { return y(d.value) })
            )
+           
+           
        
        //The benchmark line
        svg.append("line")    
@@ -90,5 +117,6 @@
           .attr("stroke-width", 1) 
           .attr("stroke-dasharray", ("3, 3"));
    }
+   
    </script>
 </body>

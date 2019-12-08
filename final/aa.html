@@ -56,8 +56,8 @@
             
              for (var i=0; i<data.length; i++) {
                   var meetings = `<h2>${data[i].address}</h2> 
-                                  <p>${data[i].addressname}</p>
-                                  <p>${data[i].zonename}</p>`
+                                  <span>${data[i].addressname}</span>
+                                  <span>${data[i].zonename}</span>`
                                  
                   for (var x=0; x<data[i]['meetings'].length; x++){
                      meetings += `<br>Day: ${data[i].meetings[x]['Day']}
