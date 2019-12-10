@@ -52,7 +52,6 @@ On initial load, all of the AA meeting locations appear as map markers. The map 
 Connecting the endpoints to this interface I am using handle bars as a templating system. The handlebars variable aaData from res.end is being assigned a new variable name (originalData) in the script tag as a way to render and work with the queried data. I am using Leaflet.js to load the map and created a function which moves the map to specified location on a button click. Inside that function the data is being filtered based on the zone name. 
 
 ```javascript
-   <script>
         var originaldata = {{{aaData}}};
         var data = originaldata;
         
@@ -98,7 +97,6 @@ Connecting the endpoints to this interface I am using handle bars as a templatin
             makeMarkers()
             mymap.panTo(coords, {animate: true, duration: 0.5}); 
         }
-    </script>
 ```
 
 #### Challenges
