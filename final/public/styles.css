@@ -156,3 +156,20 @@ hr {
     font-size: 10px; 
     shape-rendering: crispEdges;
   }
+  
+ /*.focus circle {*/
+ /*       fill: steelblue;*/
+ /*   }*/
+
+ /*   .focus text {*/
+ /*       font-size: 14px;*/
+ /*   }*/
+
+ /*   .tooltip {*/
+ /*       fill: white;*/
+ /*       stroke: #000;*/
+ /*   }*/
+
+ /*   .tooltip-date, .tooltip-likes {*/
+ /*       font-weight: bold;*/
+ /*   }*/
