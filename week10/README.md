@@ -1,3 +1,5 @@
+*The weblink mentioned has been used for the final outcome. The details below highlight my progress from Week 10: November 18, 2019*
+
 ## Goals 
 The goal of this weekly assignment is to create a web server application in Node.js that will respond to various requests for JSON data for AA meetings, process blog entries, and sensor readings. 
 
