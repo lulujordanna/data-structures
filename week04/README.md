@@ -1,4 +1,4 @@
-*This folder has been used for adding all parsed data to the SQL database. The details below highlight my progress from Week 04, September 23, 2019*
+*This folder has been used for adding all parsed data to the SQL database. The details below highlight my progress from Week 04: September 23, 2019*
 
 ## Goal 
 Taking the data that I have parsed from the AA zone, the goal of this weeks assignment is to create a relational database. There are four steps to achieving this goal; planning, creating a table, populating the table and checking the result. Each of these steps are defined in my through files uploaded and individual JS files. 
