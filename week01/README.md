@@ -36,7 +36,7 @@ request('https://parsons.nyc/thesis-2019/', function(error, response, body){
 
 Using the starter code as my base, I needed to create two arrays to hold the information for the URLs and text file paths. I then replaced the single url with the urls array (urls[i]) and replaced the single file path with the fns array (fns[i]).
 
-This did not initally work as the for() loop was executing faster than the methods inside the loop. By changing the var to a let statement, creates a fresh binding to our iterator versus var which does a single binding for the whole loop. This can be referenced here: https://2ality.com/2015/02/es6-scoping.html#let-in-loop-heads
+This did not initially work as the for() loop was executing faster than the methods inside the loop. By changing the var to a let statement, creates a fresh binding to our iterator versus var which does a single binding for the whole loop. This can be referenced here: https://2ality.com/2015/02/es6-scoping.html#let-in-loop-heads
 
 ```javascript
 var request = require('request');
