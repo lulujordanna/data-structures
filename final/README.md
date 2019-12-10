@@ -46,6 +46,7 @@ client.query(firstQuery, (qerr, qres) => {
 On initial load, all of the AA meeting locations appear as map markers. The map is set to central Manhattan with the ability to move or zoom for manual search. This can be overwhelming due to the sheer amount of map markers, which is why the filtering was implemented. Once a specific neighbourhood is chosen, the application hides all other markers limiting the users search. Detailed information about the location and meeting schedule are mapped to a pop-up which is accessible after clicking on a individual marker.
 
 ![Image of AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa1.jpg)
+![Image of AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa2.jpg)
 
 #### Challenges
 I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However the final outcome is not 100% reliable as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that were not intended (Brooklyn, Staten Island, etc.). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period. This unfortunately does not make my AA app as reliable as I hoped as I am providing wrongful data.
