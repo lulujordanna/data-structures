@@ -66,7 +66,7 @@ p {
       background-color: #6daaa5; 
       background-attachment: fixed; 
       background-size: cover;
-      padding:50px;
+      padding:50px 50px 20px;
 }
 
 .leaflet-popup-content {

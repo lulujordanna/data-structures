@@ -52,10 +52,8 @@
         dataAC = dataAc.map(function(d){
           return { datestart : d3.timeParse("%Y-%m-%dT%H:%M:%S")(d.day + 'T' + d.start), dateend : d3.timeParse("%Y-%m-%dT%H:%M:%S")(d.day + 'T' + d.end), value : d.entry }
         })
-        console.log(dataAC)
 
        draw(); 
-       
    });
        
    
@@ -83,28 +81,28 @@
          
        // AC usage
        svg.selectAll('.ac')
-            .data(dataAC)
-            .enter()
-            .append("rect")
-            .attr("x", (d) => x(d.datestart))
-            .attr("y", 0)
-            .attr("width", (d) => x(d.dateend)- x(d.datestart))
-            .attr("height", height)
-            .attr('fill','#6daaa5')
-            .attr('opacity', 0.15);
-   
-       // The line graph
+          .data(dataAC)
+          .enter()
+          .append("rect")
+          .attr("x", (d) => x(d.datestart))
+          .attr("y", 0)
+          .attr("width", (d) => x(d.dateend)- x(d.datestart))
+          .attr("height", height)
+          .attr('fill','#6daaa5')
+          .attr('opacity', 0.15);
+          
+          
+      // The line graph
        svg.append("path")
-         .datum(data)
-         .attr("fill", "none")
-         .attr("stroke", "#6daaa5")
-         .attr("stroke-width", 2)
-         .attr("d", d3.line()
+          .datum(data)
+          .attr("fill", "none")
+          .attr("stroke", "#6daaa5")
+          .attr("stroke-width", 2)
+          .attr("d", d3.line()
            .x(function(d) { return x(d.date) })
            .y(function(d) { return y(d.value) })
            )
            
-       
        //The benchmark line
        svg.append("line")    
           .attr("x1", 0)
@@ -115,6 +113,5 @@
           .attr("stroke-width", 1) 
           .attr("stroke-dasharray", ("3, 3"));
    }
-   
    </script>
 </body>
