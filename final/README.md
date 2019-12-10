@@ -49,5 +49,57 @@ On initial load, all of the AA meeting locations appear as map markers. The map 
 ![Image of filtered AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa2.jpg)
 ![Image of AA Map with popup](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa3.jpg)
 
+Connecting the endpoints to this interface I am using handle bars as a templating system. The handlebars variable aaData from res.end is being assigned a new variable name (originalData) in the script tag as a way to render and work with the queried data. I am using Leaflet.js to load the map and created a function which moves the map to specified location on a button click. Inside that function the data is being filtered based on the zone name. 
+
+```javascript
+   <script>
+        var originaldata = {{{aaData}}};
+        var data = originaldata;
+        
+        var L; 
+        var mymap = L.map('mapid',{scrollWheelZoom: false }).setView([40.766438, -73.977748], 14);
+                
+                L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+            	attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+            	minZoom: 12,
+            	maxZoom: 16, 
+            	fitBounds: ([[40.712, -74.227],[40.774, -74.125]]),
+            	scrollWheelZoom: false, 
+            	accessToken:'pk.eyJ1IjoibHVsdWpvcmRhbm5hIiwiYSI6ImNrMzdsZ3U4bzAwMHUzcXBnNHB1dWlyNmwifQ.aFToIlZE5xfbmHl2qJ1tHA'
+            }).addTo(mymap);
+            
+            var markers = L.layerGroup().addTo(mymap); 
+            makeMarkers(); 
+    
+        function makeMarkers(){
+            markers.clearLayers(); 
+            
+             for (var i=0; i<data.length; i++) {
+                  var meetings = `<h2>${data[i].address}</h2> 
+                                  <h4>${data[i].addressname}</h4>
+                                  <h4>${data[i].zonename}</h4>`
+                                 
+                  for (var x=0; x<data[i]['meetings'].length; x++){
+                     meetings += `<br>Day: ${data[i].meetings[x]['Day']}
+                                  <br>Time: ${data[i].meetings[x]['Start Time']} - ${data[i].meetings[x]['End Time']}
+                                  <br>Meeting Type: ${data[i].meetings[x]['Types']}<br>`
+                                  
+                                  if(data[i].meetings[x]['Special Interest'] != null){
+                                    meetings += `Special Interest: ${data[i].meetings[x]['Special Interest']}<br>`
+                                  }
+                 };
+                 
+                L.marker([data[i].lat, data[i].long]).bindPopup(meetings, {maxHeight: 300}).addTo(markers);
+            }
+        }
+
+        function panToZone(coords, name) {
+            data = originaldata.filter(d => d.zonename == name)
+            makeMarkers()
+            mymap.panTo(coords, {animate: true, duration: 0.5}); 
+        }
+    </script>
+```
+
 #### Challenges
 I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However the final outcome is not 100% reliable as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that were not intended (Brooklyn, Staten Island, etc.). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period. This unfortunately does not make my AA app as reliable as I hoped as I am providing wrongful data.
