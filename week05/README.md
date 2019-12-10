@@ -1,3 +1,5 @@
+*This folder has been used for adding all entries to the NoSQL database. The details below highlight my progress from Week 05, October 1, 2019*
+
 ## The Goal
 
 The goal of this week’s assignment is to begin planning out how to build a NoSQL database and populating that database for our final assignment 2, “The Process Blog”.
