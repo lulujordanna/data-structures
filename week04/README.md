@@ -1,3 +1,5 @@
+*This folder has been used for adding all parsed data to the SQL database. The details below highlight my progress from Week 04, September 23, 2019*
+
 ## Goal 
 Taking the data that I have parsed from the AA zone, the goal of this weeks assignment is to create a relational database. There are four steps to achieving this goal; planning, creating a table, populating the table and checking the result. Each of these steps are defined in my through files uploaded and individual JS files. 
 
@@ -62,4 +64,4 @@ Using the starter code I was able to check to see that the database had populate
 
 ## Next Steps
 
-While this was successful for adding a single table, I struggled with adding multiple tables. My next step would be to adjust the code to add the additional tables and parse the new data for the locationGeo table and the future tables. 
+While this was successful for adding a single table, I struggled with adding multiple tables. My next step would be to adjust the code to add the additional tables and parse the new data for the locationGeo table and the future tables. After w
