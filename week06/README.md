@@ -1,3 +1,5 @@
+*This folder has been used for debugging new queries. The details below highlight my progress from Week 06, September October 14, 2019*
+
 ## Goal
 The goal of this weeks assignment is to create queries from both the AA data in my PostgreSQL database and the Process Blog data in DynamoDB.
 
