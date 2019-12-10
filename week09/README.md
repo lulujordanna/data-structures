@@ -8,5 +8,3 @@ To complete this assignment I modified the starter code to store my data in a SQ
 ![API status](https://github.com/lulujordanna/data-structures/blob/master/week09/images/API.png)
 ![Data Stored](https://github.com/lulujordanna/data-structures/blob/master/week09/images/CollectingData.png)
 
-## My sensor! 
-![My Sensor](https://github.com/lulujordanna/data-structures/blob/master/week09/images/sensor.JPG)
