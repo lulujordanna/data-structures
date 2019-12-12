@@ -58,7 +58,7 @@ p {
 
 #sensorGraph{ 
     height: 400px;
-    padding: 30px 50px;
+    padding: 0px 50px 20px 50px; 
 }
 
 #findings{
@@ -120,13 +120,17 @@ hr {
   display: flex;
   justify-content: flex-start; 
   flex-direction: row; 
-  padding:20px 50px; 
+  padding:20px 50px 0px 50px; 
   }
   
 .sensorflex p{
     display:inline-block;
     width: 60vw;
     flex-shrink: 0;
+}
+
+.sensorflex img {
+  width: 50vw;
 }
 
 .sensorGrid { 
