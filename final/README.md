@@ -49,7 +49,7 @@ On initial load, all of the AA meeting locations appear as map markers. The map 
 ![Image of filtered AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa2.jpg)
 ![Image of AA Map with popup](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa3.jpg)
 
-Connecting the endpoints to this interface I am using handlebars as a templating system. The handlebars variable aaData from res.end is being assigned a new variable name (originalData) in the script tag as a way to render and work with the queried data. I am using Leaflet.js to load the map and created a function which moves the map to specified location on a button click. Inside that function the data is being filtered based on the zone name. 
+Connecting the endpoints to this interface I am using handlebars as a templating system. The handlebars variable aaData from res.end is being assigned a new variable name (originalData) in the script tag as a way to render and work with the queried data. I am using Leaflet.js to load the map and have assigned it a setView of Manhattan based on the latitude and longitude. The function makeMarkers uses template literals inside two for() loops to extract the data about the location and meetings schedule. This data is then bound to the marker popup. Instead of using the addTo(mymap) inside the markers function, I am adding it to the markers variable, which is a leaflet layer group. This is in order to reset the map markers once a button is clicked.  When the panToZone function is called (on button click), the map moves to the specified coordinates (coords variable) and the data is filtered by zone name. 
 
 ```javascript
         var originaldata = {{{aaData}}};
