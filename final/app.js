@@ -63,6 +63,7 @@ client.query(firstQuery, (qerr, qres) => {
     }
   });
 });
+
 //////////////////////////////////
 app.get('/sensor', function(req, res) {
 
@@ -90,25 +91,11 @@ var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours'
         }
   });
 });
-//////////////////////////////////
 
+//////////////////////////////////
 app.get('/process', function(req, res) {
     var processOutput = [];
     var dynamodb = new AWS.DynamoDB();
-    
-    // var params = {
-    //     TableName : "processblog",
-    //     KeyConditionExpression: "#tp = :categoryName and #dt between :minDate and :maxDate", // Query for Process Blog
-    //     ExpressionAttributeNames: { // name substitution, used for reserved words in DynamoDB
-    //         "#tp" : "category", 
-    //         "#dt" : "date"
-    //     },
-    //     ExpressionAttributeValues: { // the query values
-    //         ":categoryName": {S: "AA Meetings"}, 
-    //         ":minDate": {S: new Date("August 30, 2019").toDateString()},
-    //         ":maxDate": {S: new Date("December 11, 2019").toDateString()}
-    //     }
-    // };
     
     var params = {
                 TableName: "processblog",
@@ -127,8 +114,8 @@ app.get('/process', function(req, res) {
     dynamodb.scan(params, function(err, data) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+            throw (err); 
         } else {
-            // console.log("Query succeeded.");
             data.Items.forEach(function(item) {
             processOutput.push(item); 
             });
@@ -136,8 +123,8 @@ app.get('/process', function(req, res) {
         }
     });
 });
-//////////////////////////////////
 
+//////////////////////////////////
 // listen on port 8080
 app.listen(8080, function() {
     console.log('Server listening...');
