@@ -105,8 +105,9 @@ I am very happy with the final outcome, as it not only reflects my intended desi
 <hr>
 
 ### 3: Cool November: A Temperature Visualization
-This project combines weekly assignments 8, 9, 10 and 11 to produce a temperature representation from the data I collected using a Particle sensor. The visualization records the average hourly temperature of my bedroom over the course of a month and compares the temperature to when the air conditioner is running. I chose to explore this topic as I began to develop a wasteful habit of running my air conditioner to combat with the heat in my apartment unit. 
+This project combines weekly assignments 8, [9](https://github.com/lulujordanna/data-structures/tree/master/week09), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a temperature representation from the data I collected using a [Particle 
+Sensor](https://www.particle.io/). The visualization records the average hourly temperature of my bedroom over the course of a month and compares the temperature to when the air conditioner is running. I chose to explore this topic as I began to develop a wasteful habit of running my air conditioner to combat with the heat in my apartment unit. 
 
 #### The Visual Representation 
-![Image of AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa1.jpg)
-
+![Image of Temperature Sensor](https://github.com/lulujordanna/data-structures/blob/master/final/images/sensor1.jpg)
+![Image of Temperature Sensor](https://github.com/lulujordanna/data-structures/blob/master/final/images/sensor2.jpg)
