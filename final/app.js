@@ -99,7 +99,7 @@ app.get('/process', function(req, res) {
     
     var params = {
                 TableName: "processblog",
-                ProjectionExpression: "category, #dt, title, entry, #u, photo",
+                ProjectionExpression: "category, #dt, title, entry, #u",
                 FilterExpression: "#dt between :minDate and :maxDate",
                 ExpressionAttributeNames: { // name substitution, used for reserved words in DynamoDB
                  "#u" : "url", 
@@ -107,7 +107,7 @@ app.get('/process', function(req, res) {
                     },
                  ExpressionAttributeValues: { // the query values
                     ":minDate": {S: new Date("August 30, 2019").toDateString()},
-                    ":maxDate": {S: new Date("December 11, 2019").toDateString()}
+                    ":maxDate": {S: new Date("December 12, 2019").toDateString()}
                 }
             };
             
