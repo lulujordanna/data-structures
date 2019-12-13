@@ -101,3 +101,12 @@ Connecting the endpoints to this interface I am using handlebars as a templating
 
 #### Challenges
 I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However the final outcome is not as fault-tolerant as intended, as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that are not correct (Brooklyn, Staten Island). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period.
+
+<hr>
+
+### 3: Cool November: A Temperature Visualization
+This project combines weekly assignments 8, 9, 10 and 11 to produce a temperature representation from the data I collected using a Particle sensor. The visualization records the average hourly temperature of my bedroom over the course of a month and compares the temperature to when the air conditioner is running. I chose to explore this topic as I began to develop a wasteful habit of running my air conditioner to combat with the heat in my apartment unit. 
+
+#### The Visual Representation 
+![Image of AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa1.jpg)
+
