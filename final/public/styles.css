@@ -1,8 +1,16 @@
+/* ALL PAGES */
 body{
     margin: 0px; 
 }
 
-/* TYPOGRAPHY */
+hr { 
+    display: block;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 0.5px;
+    margin: 0px 50px;
+}
+
 h1 {
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
@@ -42,31 +50,15 @@ p {
     font-size: 16px; 
 }
 
+
+/* AA */
 .aaDescription{
     margin: 35px 0px 5px;
     padding:0px 50px;
 }
 
-.sensorDescription{
-    margin: 0px;
-}
-
-/* DIVS/SECTIONS */
 #mapid { 
     height: 450px;
-}
-
-#sensorGraph{ 
-    height: 400px;
-    padding: 0px 50px 20px 50px; 
-}
-
-#findings{
-      color:white;
-      background-color: #6daaa5; 
-      background-attachment: fixed; 
-      background-size: cover;
-      padding:50px 50px 20px;
 }
 
 .leaflet-popup-content {
@@ -75,17 +67,6 @@ p {
     font-size: 13px;
 }
 
-
-/* LINE BREAKS */
-hr { 
-    display: block;
-    overflow: hidden;
-    border-style: inset;
-    border-width: 0.5px;
-    margin: 0px 50px;
-}
-
-/* BUTTONS/GRIDS */
 .aaGrid { 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -115,6 +96,25 @@ hr {
 /*.aaGrid button:focus{*/
 /*  background-color: #212121;*/
 /*}*/
+
+
+/* SENSOR */
+.sensorDescription{
+    margin: 0px;
+}
+
+#sensorGraph{ 
+    height: 400px;
+    padding: 0px 50px 20px 50px; 
+}
+
+#findings{
+      color:white;
+      background-color: #6daaa5; 
+      background-attachment: fixed; 
+      background-size: cover;
+      padding:50px 50px 20px;
+}
 
 .sensorflex { 
   display: flex;
@@ -177,3 +177,42 @@ hr {
  /*   .tooltip-date, .tooltip-likes {*/
  /*       font-weight: bold;*/
  /*   }*/
+
+
+/* PROCESS BLOG */
+.dropdown{
+     padding:20px 50px 0px 50px;
+}
+
+td{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    font-size: 16px; 
+}
+
+td span {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    font-size: 20px; 
+}
+
+table {
+    padding: 50px;
+}
+
+td button {
+  background-color: #212121;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+td button:hover{
+    background-color:#f8f8f8;
+    color: #000;
+}

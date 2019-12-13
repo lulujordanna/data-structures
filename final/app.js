@@ -94,7 +94,7 @@ var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours'
 
 //////////////////////////////////
 app.get('/process', function(req, res) {
-    var processOutput = [];
+    
     var dynamodb = new AWS.DynamoDB();
     
     var params = {
@@ -114,12 +114,10 @@ app.get('/process', function(req, res) {
     dynamodb.scan(params, function(err, data) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-            throw (err); 
-        } else {
-            data.Items.forEach(function(item) {
-            processOutput.push(item); 
-            });
-            res.send(processOutput);
+            throw (err);
+        }
+        else {
+            res.end(template3({ processData: JSON.stringify(data.Items)}));
         }
     });
 });
