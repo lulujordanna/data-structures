@@ -99,7 +99,7 @@ Connecting the endpoints to this interface I am using handlebars as a templating
         }
 ```
 
-#### Challenges
+#### Takeaways
 I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However the final outcome is not as fault-tolerant as intended, as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that are not correct (Brooklyn, Staten Island). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period.
 
 <hr>
@@ -109,10 +109,35 @@ This project combines weekly assignments 8, [9](https://github.com/lulujordanna/
 Sensor](https://www.particle.io/). The visualization records the average hourly temperature of my bedroom over the course of a month and compares the temperature to when the air conditioner is running. I chose to explore this topic as I began to develop a wasteful habit of running my air conditioner to combat with the heat in my apartment unit. 
 
 #### The Data
- 
+The data collected from the Particle Sensor was written to a PostgreSQL database. To query this data, I first wrote a sub-query which converts the time from GMT to EST. Then in my select clause, I extracted the year, month, day and hour from the timestamp in the adjSensorTime variable. The query then averages the temperature value and then groups the data by this new information. Similarly to the previous projects, I used Express and Handlebars to send the data to the webpage.
 
 ```javascript
+app.get('/sensor', function(req, res) {
 
+const client = new Pool(db_credentials);
+
+//SQL Query for Sensor Data
+var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours' as adjSensorTime, * FROM sensorData)
+                  
+                  SELECT
+                        EXTRACT (YEAR FROM adjSensorTime) as sensorYear,
+                        EXTRACT (MONTH FROM adjSensorTime) as sensorMonth, 
+                        EXTRACT (DAY FROM adjSensorTime) as sensorDay,
+                        EXTRACT (HOUR FROM adjSensorTime) as sensorHour, 
+                        AVG(sensorValue::int) as temp_value
+                        FROM newSensorData
+                        GROUP BY sensorYear, sensorMonth, sensorDay, sensorHour
+                        ORDER BY sensorYear, sensorMonth, sensorDay, sensorHour;`;
+ 
+    client.connect();
+    client.query(secondQuery, (qerr, qres) => {
+        if (qerr) {throw qerr}
+        else {
+            res.end(template2({sensorData: JSON.stringify(qres.rows)}));
+            client.end();
+        }
+  });
+});
 ```
 
 #### The Visual Representation 
@@ -121,4 +146,93 @@ The app centers around a d3 generated line graph. The line graph is the temperat
 ![Image of Temperature Sensor](https://github.com/lulujordanna/data-structures/blob/master/final/images/sensor1.jpg)
 ![Image of Temperature Sensor](https://github.com/lulujordanna/data-structures/blob/master/final/images/sensor2.jpg)
 
-Connecting the data to the interface 
+Connecting the data to the interface had it's challenges as I was using two time-based data inputs; the temperature (queried from SQL) and my air conditioner times (stored in a JSON file). The handlebars variable from my query is being assigned a new variable name (data). I first started by setting up the foundation for a line graph. Then inside my draw function, I used the data map function to parse the time (d.date) and temperature value (d.value). To build the line graph I used the datum attribute and assigned my x coordinate to represent the date, and the y coordinate to represent the temperature. Once the line graph was created I repeated the process for the air conditioner. I used the data map function again, this time within a d3.json function outside of the draw function. Once the air conditioner data was mapped correctly, inside the draw function I used the data attribute and appended a rectangle based on the start and end time of using the air conditioner. 
+
+```javascript
+   var data ={{{sensorData}}}
+   
+   // set the dimensions and margins of the graph
+   var margin = {top: 10, right: 30, bottom: 30, left: 20},
+       width = 1350 - margin.left - margin.right,
+       height = 400 - margin.top - margin.bottom;
+       tooltip = { width: 100, height: 100, x: 10, y: -30 };
+   
+   // append the svg object to the body of the page
+   var svg = d3.select("#sensorGraph")
+     .append("svg")
+       .attr("width", width + margin.left + margin.right)
+       .attr("height", height + margin.top + margin.bottom)
+     .append("g")
+       .attr("transform",
+             "translate(" + margin.left + "," + margin.top + ")");
+            
+   var dataAC; 
+   d3.json("./sensor.JSON", function(dataAc) {
+        dataAC = dataAc.map(function(d){
+          return { datestart : d3.timeParse("%Y-%m-%dT%H:%M:%S")(d.day + 'T' + d.start), dateend : d3.timeParse("%Y-%m-%dT%H:%M:%S")(d.day + 'T' + d.end), value : d.entry }
+        })
+       draw(); 
+   });
+       
+   
+   function draw(){
+   
+      //Mapping data from SQL query to d3
+       data = data.map(function(d){
+          return { date : d3.timeParse("%Y-%m-%dT%H")(d.sensoryear + '-' + d.sensormonth + '-' + d.sensorday + 'T' + d.sensorhour), value : d.temp_value }
+        })
+       // X axis
+       var x = d3.scaleTime()
+         .domain(d3.extent(data, function(d) { return d.date; }))
+         .range([ 0, width ]);
+       svg.append("g")
+         .attr("transform", "translate(0," + height + ")")
+         .call(d3.axisBottom(x));
+   
+       // Y axis
+       var y = d3.scaleLinear()
+         .domain([0, d3.max(data, function(d) { return +d.value; })])
+         .range([ height, 0 ]);
+       svg.append("g")
+         .call(d3.axisLeft(y));
+         
+       // AC usage
+       svg.selectAll('.ac')
+          .data(dataAC)
+          .enter()
+          .append("rect")
+          .attr("x", (d) => x(d.datestart))
+          .attr("y", 0)
+          .attr("width", (d) => x(d.dateend)- x(d.datestart))
+          .attr("height", height)
+          .attr('fill','#6daaa5')
+          .attr('opacity', 0.15);
+          
+          
+      // The line graph
+       svg.append("path")
+          .datum(data)
+          .attr("fill", "none")
+          .attr("stroke", "#6daaa5")
+          .attr("stroke-width", 2)
+          .attr("d", d3.line()
+           .x(function(d) { return x(d.date) })
+           .y(function(d) { return y(d.value) })
+           )
+           
+       //The benchmark line
+       svg.append("line")    
+          .attr("x1", 0)
+          .attr("y1", 94.5)
+          .attr("x2", width)
+          .attr("y2", 94.5)
+          .attr("stroke", "#6daaa5")
+          .attr("stroke-width", 1) 
+          .attr("stroke-dasharray", ("3, 3"));
+   }
+```
+
+#### Takeaways
+I am also very happy with this final outcome, as its is very close to my intended design. I feel that my app has accounted for designing a reliable web application as I accounted for the issues of converting time in my query. If I was continuing to collect data and the graph would have to adapt daily, I would need to take this into account for designing a more fault tolerant system that I currently have. 
+
+
