@@ -107,7 +107,7 @@ app.get('/process', function(req, res) {
                     },
                  ExpressionAttributeValues: { // the query values
                     ":minDate": {S: new Date("August 30, 2019").toDateString()},
-                    ":maxDate": {S: new Date("December 12, 2019").toDateString()}
+                    ":maxDate": {S: new Date("December 13, 2019").toDateString()}
                 }
             };
             
