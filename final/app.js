@@ -5,6 +5,7 @@ const { Pool } = require('pg');
 var express = require('express'),
     app = express();
     app.use(express.static('public'));
+var bodyParser = require('body-parser');
 
 //SQL dependencies
  var db_credentials = new Object();
@@ -93,34 +94,46 @@ var secondQuery = `WITH newSensorData as (SELECT sensorTime - INTERVAL '5 hours'
 });
 
 //////////////////////////////////
-app.get('/process', function(req, res) {
-    
+var defaultCategory = "AA Meetings"
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+
+app.get('/process', function(req,res) {
+    processQuery(res,defaultCategory);
+});
+
+app.post('/process', function(req,res) {
+    processQuery(res,req.body.category);
+})
+
+function processQuery(res,category) {
     var dynamodb = new AWS.DynamoDB();
     
     var params = {
                 TableName: "processblog",
-                ProjectionExpression: "category, #dt, title, entry, #u",
-                FilterExpression: "#dt between :minDate and :maxDate",
+                ProjectionExpression: "category, #dt, title, entry, #u, photo",
+                FilterExpression: "category = :test",
                 ExpressionAttributeNames: { // name substitution, used for reserved words in DynamoDB
                  "#u" : "url", 
                  "#dt" : "date"
                     },
                  ExpressionAttributeValues: { // the query values
-                    ":minDate": {S: new Date("August 30, 2019").toDateString()},
-                    ":maxDate": {S: new Date("December 13, 2019").toDateString()}
+                    ":test": {S: category}
                 }
             };
             
-    dynamodb.scan(params, function(err, data) {
+    var query = dynamodb.scan(params, function(err, data) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
             throw (err);
         }
         else {
-            res.end(template3({ processData: JSON.stringify(data.Items)}));
+            res.end(template3({ processData: JSON.stringify(data.Items), category: JSON.stringify(category)}));
         }
     });
-});
+    
+    return query;
+}
 
 //////////////////////////////////
 // listen on port 8080

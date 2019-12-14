@@ -202,4 +202,13 @@ td button {
 td button:hover{
     background-color:#f8f8f8;
     color: #000;
+    cursor: pointer;
+}
+
+td.entry-row, td.date-row {
+    padding-bottom: 20px;
+}
+
+td.button-row {
+    padding-bottom: 50px;
 }

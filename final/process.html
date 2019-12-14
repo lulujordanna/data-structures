@@ -14,59 +14,50 @@
    <p class="processDescription">This process blog highlights my progression with learning JavaScript this semester in PGDV 5110 - Data Structures. Use the dropdown menu to filter by project</p>
    
    <div class="dropdown">
-      <select name="Projects">
-        <option value="All Projects">All</option>
-        <option value="AA Meetings">AA Meetings</option>
-        <option value="Process Blog">Process Blog</option>
-        <option value="Temperature Sensor">Temperature Sensor</option>
-      </select> 
+      <form method="POST" id="project-dropdown">
+         <select class="category" id="category" name="category">
+           <option name="aa" value="AA Meetings">AA Meetings</option>
+           <option name="process" value="Process Blog">Process Blog</option>
+           <option name="temperature" value="Temperature Sensor">Temperature Sensor</option>
+         </select> 
+         <input type="submit" />
+      </form>
    </div>
    
    <div id='myEntries'></div>
    
    <script>
-      var data = {{{processData}}}
+      var data = {{{processData}}};
+      var category_name = {{{category}}};
       
       var myTable = `<table><tbody>`;
 
       for (var i=0; i < data.length; i++) {
           myTable += '<tr>';
-      	 myTable += '<td>' + '<span>' + data[i].title.S + '</span>' + '</td>';
+      	 myTable += '<td class="title-row">' + '<span>' + data[i].title.S + '</span>' + '</td>';
       	 myTable += '</tr>';
       	 
       	 myTable += '<tr>';
-      	 myTable += '<td>'+ data[i].category.S + '</td>';
+      	 myTable += '<td class="category-row">'+ data[i].category.S + '</td>';
       	 myTable += '</tr>';
       	 
       	 myTable += '<tr>';
-      	 myTable += '<td>' + data[i].date.S + '</td>';
+      	 myTable += '<td class="date-row">' + data[i].date.S + '</td>';
       	 myTable += '</tr>';
       	
       	 myTable += '<tr>';
-      	 myTable += '<td>' + data[i].entry.S + '</td>';
+      	 myTable += '<td class="entry-row">' + data[i].entry.S + '</td>';
       	 myTable += '</tr>';
+      	 
+      	 if (data[i].photo) { 
+      	    myTable += '<tr><td><img src='+data[i].photo.S+'><td></tr>'
+      	  //  console.log(data[i].photo.S) 
+      	    
+      	 }; 
       	 
       	 myTable += '<tr>';
+      	 myTable += '<td class="button-row">' + '<a href="'+data[i].url.S+'"><button>Learn more</button></a>' + '</td>';
       	 myTable += '</tr>';
-      	 myTable += '<tr>';
-      	 myTable += '</tr>';
-      	 
-      // 	 myTable += '<tr>';
-      // 	 myTable += '<td>' + '<button>' + data[i].url.S + '</button>' + '</td>';
-      // 	 myTable += '</tr>';
-      	 
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
-      	 myTable += '<tr>'; myTable += '</tr>';
       }
       
       myTable += '</tbody></table>'
@@ -74,6 +65,8 @@
       $(window).on('load', function() {
         $("#myEntries").html(myTable)
       });
+      
+      document.getElementById("category").value = category_name;
 
    </script>
 </body>
