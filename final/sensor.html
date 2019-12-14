@@ -15,6 +15,7 @@
    </div>
    <div class="sensorflex"><img src="image4.png" alt="Graph Legend"></div>
    
+   <div class="tooltip"></div>
    <section id="sensorGraph"></section>
    
    <section id="findings">
@@ -41,6 +42,7 @@
    // append the svg object to the body of the page
    var svg = d3.select("#sensorGraph")
      .append("svg")
+        .attr("class","sensor-svg")
        .attr("width", width + margin.left + margin.right)
        .attr("height", height + margin.top + margin.bottom)
      .append("g")
@@ -62,7 +64,7 @@
    
       //Mapping data from SQL query to d3
        data = data.map(function(d){
-          return { date : d3.timeParse("%Y-%m-%dT%H")(d.sensoryear + '-' + d.sensormonth + '-' + d.sensorday + 'T' + d.sensorhour), value : d.temp_value }
+          return { tooltip_date: (d.sensormonth + '/' + d.sensorday + '/' + d.sensorhour+':00' ), date : d3.timeParse("%Y-%m-%dT%H")(d.sensoryear + '-' + d.sensormonth + '-' + d.sensorday + 'T' + d.sensorhour), value : d.temp_value }
         })
 
        // X axis
@@ -81,7 +83,8 @@
          .call(d3.axisLeft(y));
          
        // AC usage
-       svg.selectAll('.ac')
+       let ac_g = svg.append('g').attr('class','ac-rects')
+       ac_g.selectAll('.ac')
           .data(dataAC)
           .enter()
           .append("rect")
@@ -113,6 +116,57 @@
           .attr("stroke", "#6daaa5")
           .attr("stroke-width", 1) 
           .attr("stroke-dasharray", ("3, 3"));
+          
+        // The indicator circle  
+        svg.append("circle")
+           .attr("r", 5)
+           .attr("class", "hover-circle hover-circle-none")
+        
+        // Hidden rectangles for the tooltip    
+        let hover_rect_width = width/data.length;
+        let hover_g = svg.append('g').attr('class','hover-rect-g');
+        
+        hover_g.selectAll('rect.hover-rect')
+            .data(data)
+            .enter()
+            .append('rect')
+                .attr('class','hover-rect')
+                .attr('width',hover_rect_width)
+                .attr('height',height)
+                .attr('x',(d) => x(d.date) - hover_rect_width / 2)
+                .attr('y',0)
+                .on('mouseover', function (d,i) {
+                    
+                    var x_hover = d3.scaleTime()
+                     .domain(d3.extent(data, function(d) { return d.date; }))
+                     .range([ 0, width ]);
+                    var y_hover = d3.scaleLinear()
+                     .domain([0, d3.max(data, function(d) { return +d.value; })])
+                     .range([ height, 0 ]);
+                    
+                    d3.select('circle.hover-circle')
+                        .attr('cx',x_hover(d.date))
+                        .attr('cy',y_hover(d.value))
+                        .classed("hover-circle-none", false);
+                    
+                    d3.select('.tooltip').html(
+                        '<h2>'+d.tooltip_date+'</h2>' + '<p>' +'The temperature of my room was '+d3.format('.1f')(d.value)+'</p>'
+                    )
+                    let mouse_pos = d3.mouse(this);
+                    let x = +mouse_pos[0]+50
+                    let y = +mouse_pos[1]+50
+                    
+                    d3.select('.tooltip')
+                        .style('transform','translate('+x+'px,'+y+'px)')
+                })
+                .on('mouseout',function (d,i) {
+                    d3.select('.tooltip')
+                    .html('')
+                    
+                    d3.select('circle.hover-circle')
+                      .classed("hover-circle-none", true);
+                    
+                })
    }
    </script>
 </body>

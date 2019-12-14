@@ -145,6 +145,12 @@ p {
   max-width: 100%;
 }
 
+.tooltip {
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+}
+
 /* SENSOR SVG */
 .domain {
     stroke: #dbdbdb;
@@ -159,6 +165,18 @@ p {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 10px; 
     shape-rendering: crispEdges;
+  }
+  
+  rect.hover-rect {
+      opacity: 0;
+  }
+  
+  circle.hover-circle-none {
+      display: none;
+  }
+  
+  circle.hover-circle {
+      fill: #6c6c6c;
   }
 
 
