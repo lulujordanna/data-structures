@@ -105,11 +105,62 @@ I am very happy with the final outcome, as it not only reflects my intended desi
 <hr>
 
 ### 2: Learning JS: A Process Blog
-This project brings together weekly assignments [5](https://github.com/lulujordanna/data-structures/tree/master/week05), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a blog-style interface cataloging my progression with learning JavaScript in Data Structures this semester. The blog entries are categorized by the three final assignments and the data is stored using a semi-structured structure in DyanamoDB.
+This project brings together weekly assignments [5](https://github.com/lulujordanna/data-structures/tree/master/week05), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a blog-style interface cataloging my progression with learning JavaScript in Data Structures this semester. The blog entries are categorized by the three final assignments. 
+
+#### The Data
+The data is stored using a semi-structured structure in Dynamodb. The final query structure is filtered by category. The params variable connects to the Dynamo db 'table', the elements of the blog entry (in the Projection Expression) and the filter parameter (Filter Expression). The query uses the scan operation to retrieve the data and the res.end has two handlebars variables, processData (the items in the Projection Expression) and category (the filter Expression). This project is different from the other examples as I am using both app.get and app.post. The app.get is the inital view of the application, which is set to the default category of AA Meetings. Using bodyParser, the app.post is how the webpage changes, after the inital load and based on the category filtering. This is visually represented in the dropdown menu. 
+
+```javascript
+var defaultCategory = "AA Meetings"
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+
+app.get('/process', function(req,res) {
+    processQuery(res,defaultCategory);
+});
+
+app.post('/process', function(req,res) {
+    processQuery(res,req.body.category);
+})
+
+function processQuery(res,category) {
+    var dynamodb = new AWS.DynamoDB();
+    
+    var params = {
+                TableName: "processblog",
+                ProjectionExpression: "category, #dt, title, entry, #u, photo",
+                FilterExpression: "category = :test",
+                ExpressionAttributeNames: { // name substitution, used for reserved words in DynamoDB
+                 "#u" : "url", 
+                 "#dt" : "date"
+                    },
+                 ExpressionAttributeValues: { // the query values
+                    ":test": {S: category}
+                }
+            };
+            
+    var query = dynamodb.scan(params, function(err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+            throw (err);
+        }
+        else {
+            res.end(template3({ processData: JSON.stringify(data.Items), category: JSON.stringify(category)}));
+        }
+    });
+    
+    return query;
+}
+```
 
 #### The Visual Representation
+The visual representation is a clean, blog style interface which has a dropdown menu to filter by the three final projects of Data Structures; AA Meetings, Process Blog and Temperature Sensor.  
+
 ![Image of Process Blog](https://github.com/lulujordanna/data-structures/blob/master/final/images/process1.jpg)
 ![Image of Process Blog](https://github.com/lulujordanna/data-structures/blob/master/final/images/process2.jpg)
+
+#### Connecting to the Endpoints
+
 
 <hr>
 
