@@ -1,10 +1,10 @@
 ## Final Assignments Documentation
 
 ### 1: Alcohol Anonymous: Meeting Finder
-This project amalgamates weekly assignments [1](https://github.com/lulujordanna/data-structures/tree/master/week01), [2](https://github.com/lulujordanna/data-structures/tree/master/week02), [3](https://github.com/lulujordanna/data-structures/tree/master/week03), [4](https://github.com/lulujordanna/data-structures/tree/master/week04), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [7](https://github.com/lulujordanna/data-structures/tree/master/week07), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to repurpose the tabular Alcoholics Anonymous schedule for Manhattan into a new map-based interface. The application was developed as a long term planning tool which enables the user to find the right AA meeting based on defined geographic parameters. All AA meeting locations are initially loaded as map markers with the function to filter the map markers by neighbourhood. To view the final project, [click here](http://52.87.186.251:8080/aa). 
+This project amalgamates weekly assignments [1](https://github.com/lulujordanna/data-structures/tree/master/week01), [2](https://github.com/lulujordanna/data-structures/tree/master/week02), [3](https://github.com/lulujordanna/data-structures/tree/master/week03), [4](https://github.com/lulujordanna/data-structures/tree/master/week04), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [7](https://github.com/lulujordanna/data-structures/tree/master/week07), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to repurpose the tabular Alcoholics Anonymous schedule for Manhattan into a new map-based interface. The application was developed as a long term planning tool which enables the user to find the right AA meeting for them, based on defined geographic parameters. All AA meeting locations are initially loaded as map markers with the function to filter the map markers by neighbourhood. To view the final project, [click here](http://52.87.186.251:8080/aa). 
 
 #### The Data
-The data of all ten zones of [New York's AA Meeting List](https://parsons.nyc/aa/m10.html) was manually parsed, cleaned and stored in PostgreSQL. The final query structure has two initial sub-queries to connect the three SQL tables. Once the tables are joined on zones and location, the SELECT statement ascribes lat, long, addressname, address and zonename to be unique parameters and then creates a json_build_object for the meeting information. This is to ensure that duplicate markers would not be created for the same geo-location. The app uses Express and Handlebars to send the data to the webpage. 
+The data of all ten zones of [New York's AA Meeting List](https://parsons.nyc/aa/m10.html) was manually parsed, cleaned and stored in PostgreSQL. The final query structure has two initial sub-queries to connect the three SQL tables. Once the tables are joined on zones and location, the SELECT statement ascribes the lat, long, addressname, address and zonename to be unique parameters and then creates a json_build_object for the meeting information. This is to ensure that duplicate markers would not be created for the same geo-location. The app uses Express and Handlebars to send the data to the webpage. 
 
 ```javascript
 const indexSource = fs.readFileSync("aa.html").toString();
@@ -43,7 +43,7 @@ client.query(firstQuery, (qerr, qres) => {
 ```
 
 #### The Visual Representation
-On initial load, all of the AA meeting locations appear as map markers. The map is set to central Manhattan with the ability to move or zoom for manual search. This can be overwhelming due to the sheer amount of map markers, which is why the filtering was implemented. Once a specific neighbourhood is chosen, the application hides all other markers limiting the users search. Detailed information about a location and meeting schedule are mapped to a pop-up which is accessible after clicking on a individual marker.
+On initial load, all of the AA meeting locations appear as map markers. The map is set to central Manhattan with the ability to move or zoom for manual search. This can be overwhelming due to the sheer amount of map markers, which is why the filtering was implemented. Once a specific neighbourhood is chosen, the application hides all other markers limiting the meetings to the users specification. Detailed information about a location and meeting schedule are mapped to a pop-up which is accessible after clicking on a individual marker.
 
 ![Image of AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa1.jpg)
 ![Image of filtered AA Map](https://github.com/lulujordanna/data-structures/blob/master/final/images/aa2.jpg)
@@ -100,7 +100,7 @@ Connecting the endpoints to this interface I am using handlebars as a templating
 ```
 
 #### Takeaways
-I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However the final outcome is not as fault-tolerant as intended, as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that are not correct (Brooklyn, Staten Island). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period.
+I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However, the final outcome is not as fault-tolerant as intended as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that are not correct (Brooklyn, Staten Island). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period.
 
 <hr>
 
@@ -108,7 +108,7 @@ I am very happy with the final outcome, as it not only reflects my intended desi
 This project brings together weekly assignments [5](https://github.com/lulujordanna/data-structures/tree/master/week05), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a blog-style interface cataloging my progression with learning JavaScript in Data Structures this semester. The blog entries are categorized by the three final assignments. To view the final project, [click here](http://52.87.186.251:8080/process).
 
 #### The Data
-The data is stored using a semi-structured structure in Dynamodb. The final query structure is filtered by category. The params variable connects to the Dynamo db 'table', the elements of the blog entry (in the Projection Expression) and the filter parameter (Filter Expression). The query uses the scan operation to retrieve the data and the res.end has two handlebars variables, processData (the items in the Projection Expression) and category (the filter Expression). This project is different from the other examples as I am using both app.get and app.post. The app.get is the initial view of the application, which is set to the default category of AA Meetings. Using bodyParser, the app.post is how the webpage changes, after the initial load and based on the category filtering. This is visually represented in the dropdown menu. 
+The data is stored using a semi-structured structure in Dynamodb. The final query structure is filtered by category. The params variable connects to the Dynamodb 'table', the elements of the blog entry (in the Projection Expression) and the filter parameter (Filter Expression). The query uses the scan operation to retrieve the data and the res.end has two handlebars variables, processData (the items in the Projection Expression) and category (the filter Expression). This project is different from the other examples as I am using both app.get and app.post. The app.get is the initial view of the application, which is set to the default category of AA Meetings. Using bodyParser, the app.post is how the webpage changes, after the initial load and based on the category filtering. This is visually represented in the dropdown menu, which is explained below. 
 
 ```javascript
 var defaultCategory = "AA Meetings"
@@ -154,13 +154,12 @@ function processQuery(res,category) {
 ```
 
 #### The Visual Representation
-The visual representation is a clean, blog style interface which has a dropdown menu to filter by the three final projects of Data Structures; AA Meetings, Process Blog and Temperature Sensor.  
+The visual representation is a clean, blog style interface which has a dropdown menu to filter by the three final projects of the Data Structures class; AA Meetings, Process Blog and Temperature Sensor.  
 
 ![Image of Process Blog](https://github.com/lulujordanna/data-structures/blob/master/final/images/process1.jpg)
 ![Image of Process Blog](https://github.com/lulujordanna/data-structures/blob/master/final/images/process2.jpg)
 
-#### Connecting to the Endpoints
-Connecting the endpoints to the visual representation was multi-faceted. In the html portion of the document, I had to declare that the form become a POST form in order to connect to the app.post portion of the application. Then in the script tag, I re-named the handlebars variables in order to work with the queried data. I then created a table which would hold the entries data. Each table row has a specific part of the entries to create a column effect. To account of the semi-structured architecture not all of the posts have photos. In order to add them to the specified posts, I have created an if statement. Using JQuery, I load my entries into the #myEntries div. Finally the document.GetElementById is ensuring that the category selected in the drop down, remains the visible after you have clicked the submit button. 
+Connecting the endpoints to the visual representation was multi-faceted. In the html portion of the document, I had to declare that the form become a POST form in order to connect this to the app.post portion of the application. Then in the script tag, I re-named the handlebars variables to use the queried data. I then created a table which would hold the entries data. Each table row has a specific part of the entries to create a column effect. To account of the semi-structured architecture not all of the posts have photos. In order to add them to the specified posts, I have created an if statement. Using JQuery, I loaded my entries into the #myEntries div. Finally the document.GetElementById is ensuring that the category selected in the drop down, remains the visible after you have clicked the submit button. 
 
 ``` html
    <div class="dropdown">
@@ -205,7 +204,7 @@ Connecting the endpoints to the visual representation was multi-faceted. In the 
 ```
 
 #### The Takeaways
-While I am very happy with the final outcome, there are some flaws in the sorting of the posts. As I am saving the date of the entry as a dateToString, this returns the timestamp as week day, month, day and year (Ex. Fri Aug 30 2019) and the posts are being sorted in alphabetical order by day of the week. Unfortunately due to time parameters I was not able to change this data structure and the posts do not appear in chronological order. 
+While I am very happy with the final outcome, there are some flaws in the sorting of the posts. As I am saving the date of the entry as a dateToString, this returns the timestamp as week day, month, day and year (Ex. Fri Aug 30 2019) and the posts are being sorted in alphabetical order, by day of the week. Unfortunately due to time parameters I was not able to change this data structure and the posts do not appear in chronological order. 
 
 <hr>
 
@@ -251,7 +250,7 @@ The app centers around a d3 generated line graph. The line graph is the temperat
 ![Image of Temperature Sensor](https://github.com/lulujordanna/data-structures/blob/master/final/images/sensor1.jpg)
 ![Image of Temperature Sensor](https://github.com/lulujordanna/data-structures/blob/master/final/images/sensor2.jpg)
 
-Connecting the data to the interface had it's challenges as I was using two time-based data inputs; the temperature (queried from SQL) and my air conditioner times (stored in a JSON file). The handlebars variable from my query is being assigned a new variable name (data). I first started by setting up the foundation for a line graph. Then inside my draw function, I used the data map function to parse the time (d.date) and temperature value (d.value). To build the line graph I used the datum attribute and assigned my x coordinate to represent the date, and the y coordinate to represent the temperature. Once the line graph was created I repeated the process for the air conditioner. I used the data map function again, this time within a d3.json function outside of the draw function. Once the air conditioner data was mapped correctly, inside the draw function I used the data attribute and appended a rectangle based on the start and end time of using the air conditioner. 
+Connecting the data to the interface had it's challenges as I was using two time-based data inputs; the temperature (queried from SQL) and my air conditioner times (stored in a JSON file). The handlebars variable from my query is being assigned a new variable name (data). I first started by setting up the foundation for a line graph. Then inside my draw function, I used the data map function to parse the time (d.date) and temperature value (d.value). To build the line graph I used the datum attribute and assigned my x coordinate to represent the date, and the y coordinate to represent the temperature. Once the line graph was created I repeated the process for the air conditioner. I used the data map function again, this time within a d3.json function, outside of the draw function. Once the air conditioner data was mapped correctly, inside the draw function I used the data attribute and appended a rectangle based on the start and end time of using the air conditioner. I then created a tooltip that indicates when the temperature and time.
 
 ```javascript
    var data ={{{sensorData}}}
@@ -334,6 +333,56 @@ Connecting the data to the interface had it's challenges as I was using two time
           .attr("stroke", "#6daaa5")
           .attr("stroke-width", 1) 
           .attr("stroke-dasharray", ("3, 3"));
+       
+       // The indicator circle  
+        svg.append("circle")
+           .attr("r", 5)
+           .attr("class", "hover-circle hover-circle-none")
+        
+        // Hidden rectangles for the tooltip    
+        let hover_rect_width = width/data.length;
+        let hover_g = svg.append('g').attr('class','hover-rect-g');
+        
+        hover_g.selectAll('rect.hover-rect')
+            .data(data)
+            .enter()
+            .append('rect')
+                .attr('class','hover-rect')
+                .attr('width',hover_rect_width)
+                .attr('height',height)
+                .attr('x',(d) => x(d.date) - hover_rect_width / 2)
+                .attr('y',0)
+                .on('mouseover', function (d,i) {
+                    
+                    var x_hover = d3.scaleTime()
+                     .domain(d3.extent(data, function(d) { return d.date; }))
+                     .range([ 0, width ]);
+                    var y_hover = d3.scaleLinear()
+                     .domain([0, d3.max(data, function(d) { return +d.value; })])
+                     .range([ height, 0 ]);
+                    
+                    d3.select('circle.hover-circle')
+                        .attr('cx',x_hover(d.date))
+                        .attr('cy',y_hover(d.value))
+                        .classed("hover-circle-none", false);
+                    
+                    d3.select('.tooltip').html(
+                        '<h2>'+d.tooltip_date+'</h2>' + '<p>' +'The temperature was '+d3.format('.1f')(d.value)+'&#176; celsius</p>'
+                    )
+                    let mouse_pos = d3.mouse(this);
+                    let x = +mouse_pos[0]+50
+                    let y = +mouse_pos[1]+50
+                    
+                    d3.select('.tooltip')
+                        .style('transform','translate('+x+'px,'+y+'px)')
+                })
+                .on('mouseout',function (d,i) {
+                    d3.select('.tooltip')
+                    .html('')
+                    
+                    d3.select('circle.hover-circle')
+                      .classed("hover-circle-none", true);  
+                })
    }
 ```
 
