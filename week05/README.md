@@ -1,4 +1,4 @@
-*This folder has been used for adding all entries to the NoSQL database. The details below highlight my progress from Week 05: October 1, 2019*
+*This folder has been used for adding all of the entries to the NoSQL database. The details below highlight my progress from Week 05: October 1, 2019*
 
 ## The Goal
 
