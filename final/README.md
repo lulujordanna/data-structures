@@ -100,7 +100,7 @@ Connecting the endpoints to this interface I am using handlebars as a templating
 ```
 
 #### Takeaways
-I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However, the final outcome is not as fault-tolerant as intended as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that are not correct (Brooklyn, Staten Island). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period.
+I am very happy with the final outcome, as it not only reflects my intended design but it highlights my strides in learning JavaScript this semester. However, the final outcome is not as fault-tolerant as intended as I faced some challenges with the map markers. Due to a issue with my geo-coding around 10 of the meeting locations ended up in geographic locations that are not correct (Brooklyn, Staten Island). While I am disappointed with that result, the task of re-geocoding was to vast for the limited time period. Another issue of the application is that a location with multiple meetings, the meetings do not appear in chronological order. This issue had to do with connecting the a meeting schedule to the same geolocation but the task to redo was far to great for the time. 
 
 <hr>
 
