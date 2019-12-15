@@ -150,7 +150,7 @@
                         .classed("hover-circle-none", false);
                     
                     d3.select('.tooltip').html(
-                        '<h2>'+d.tooltip_date+'</h2>' + '<p>' +'The temperature of my room was '+d3.format('.1f')(d.value)+'</p>'
+                        '<h2>'+d.tooltip_date+'</h2>' + '<p>' +'The temperature was '+d3.format('.1f')(d.value)+'&#176; celsius</p>'
                     )
                     let mouse_pos = d3.mouse(this);
                     let x = +mouse_pos[0]+50

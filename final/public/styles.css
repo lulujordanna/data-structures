@@ -230,3 +230,8 @@ td.entry-row, td.date-row {
 td.button-row {
     padding-bottom: 50px;
 }
+
+td img{
+   width: 60vw; 
+   padding-bottom: 20px;
+}

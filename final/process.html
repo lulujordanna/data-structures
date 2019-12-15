@@ -33,31 +33,17 @@
       var myTable = `<table><tbody>`;
 
       for (var i=0; i < data.length; i++) {
-          myTable += '<tr>';
-      	 myTable += '<td class="title-row">' + '<span>' + data[i].title.S + '</span>' + '</td>';
-      	 myTable += '</tr>';
-      	 
-      	 myTable += '<tr>';
-      	 myTable += '<td class="category-row">'+ data[i].category.S + '</td>';
-      	 myTable += '</tr>';
-      	 
-      	 myTable += '<tr>';
-      	 myTable += '<td class="date-row">' + data[i].date.S + '</td>';
-      	 myTable += '</tr>';
-      	
-      	 myTable += '<tr>';
-      	 myTable += '<td class="entry-row">' + data[i].entry.S + '</td>';
-      	 myTable += '</tr>';
+
+      	 myTable += '<tr><td class="title-row">' + '<span>' + data[i].title.S + '</span>' + '</td></tr>';
+      	 myTable += '<tr><td class="category-row">'+ data[i].category.S + '</td></tr>';
+      	 myTable += '<tr><td class="date-row">' + data[i].date.S + '</td></tr>';
+      	 myTable += '<tr><td class="entry-row">' + data[i].entry.S + '</td></tr>';
       	 
       	 if (data[i].photo) { 
       	    myTable += '<tr><td><img src='+data[i].photo.S+'><td></tr>'
-      	  //  console.log(data[i].photo.S) 
-      	    
       	 }; 
-      	 
-      	 myTable += '<tr>';
-      	 myTable += '<td class="button-row">' + '<a href="'+data[i].url.S+'"><button>Learn more</button></a>' + '</td>';
-      	 myTable += '</tr>';
+   
+      	 myTable += '<tr><td class="button-row">' + '<a href="'+data[i].url.S+'" target="_blank"><button>Learn more</button></a>' + '</td></tr>';
       }
       
       myTable += '</tbody></table>'
