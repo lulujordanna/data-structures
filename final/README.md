@@ -107,6 +107,10 @@ I am very happy with the final outcome, as it not only reflects my intended desi
 ### 2: Learning JS: A Process Blog
 This project brings together weekly assignments [5](https://github.com/lulujordanna/data-structures/tree/master/week05), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a blog-style interface cataloging my progression with learning JavaScript in Data Structures this semester. The blog entries are categorized by the three final assignments and the data is stored using a semi-structured structure in DyanamoDB.
 
+#### The Visual Representation
+![Image of Process Blog](https://github.com/lulujordanna/data-structures/blob/master/final/images/process1.jpg)
+![Image of Process Blog](https://github.com/lulujordanna/data-structures/blob/master/final/images/process2.jpg)
+
 <hr>
 
 ### 3: Cool November: A Temperature Visualization
