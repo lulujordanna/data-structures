@@ -70,7 +70,6 @@ blogEntries.push(new BlogEntry('Process Blog', 'December 11, 2019', 'Learning JS
 blogEntries.push(new BlogEntry('Process Blog', 'December 12, 2019', 'Learning JS: The Takeaways', 'While I am very happy with the final outcome, there are some flaws in the sorting of the posts. As I am saving the date of the entry as a dateToString, this returns the timestamp as week day, month, day and year (Ex. Fri Aug 30 2019) and the posts are being sorted in alphabetical order, by day of the week. Unfortunately due to time parameters I was not able to change this data structure and the posts do not appear in chronological order.', 'https://github.com/lulujordanna/data-structures/tree/master/final'));
 
 
-
 //Adding blog entries to the DynamoDB
 var dynamodb = new AWS.DynamoDB();
 
