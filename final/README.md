@@ -1,7 +1,7 @@
 ## Final Assignments Documentation
 
 ### 1: Alcohol Anonymous: Meeting Finder
-This project amalgamates weekly assignments [1](https://github.com/lulujordanna/data-structures/tree/master/week01), [2](https://github.com/lulujordanna/data-structures/tree/master/week02), [3](https://github.com/lulujordanna/data-structures/tree/master/week03), [4](https://github.com/lulujordanna/data-structures/tree/master/week04), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [7](https://github.com/lulujordanna/data-structures/tree/master/week07), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to repurpose the tabular Alcoholics Anonymous schedule for Manhattan into a new map-based interface. The application was developed as a long term planning tool which enables the user to find the right AA meeting based on defined geographic parameters. All AA meeting locations are initially loaded as map markers with the function to filter the map markers by neighbourhood. 
+This project amalgamates weekly assignments [1](https://github.com/lulujordanna/data-structures/tree/master/week01), [2](https://github.com/lulujordanna/data-structures/tree/master/week02), [3](https://github.com/lulujordanna/data-structures/tree/master/week03), [4](https://github.com/lulujordanna/data-structures/tree/master/week04), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [7](https://github.com/lulujordanna/data-structures/tree/master/week07), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to repurpose the tabular Alcoholics Anonymous schedule for Manhattan into a new map-based interface. The application was developed as a long term planning tool which enables the user to find the right AA meeting based on defined geographic parameters. All AA meeting locations are initially loaded as map markers with the function to filter the map markers by neighbourhood. To view the final project, [click here](http://52.87.186.251:8080/aa). 
 
 #### The Data
 The data of all ten zones of [New York's AA Meeting List](https://parsons.nyc/aa/m10.html) was manually parsed, cleaned and stored in PostgreSQL. The final query structure has two initial sub-queries to connect the three SQL tables. Once the tables are joined on zones and location, the SELECT statement ascribes lat, long, addressname, address and zonename to be unique parameters and then creates a json_build_object for the meeting information. This is to ensure that duplicate markers would not be created for the same geo-location. The app uses Express and Handlebars to send the data to the webpage. 
@@ -105,10 +105,10 @@ I am very happy with the final outcome, as it not only reflects my intended desi
 <hr>
 
 ### 2: Learning JS: A Process Blog
-This project brings together weekly assignments [5](https://github.com/lulujordanna/data-structures/tree/master/week05), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a blog-style interface cataloging my progression with learning JavaScript in Data Structures this semester. The blog entries are categorized by the three final assignments. 
+This project brings together weekly assignments [5](https://github.com/lulujordanna/data-structures/tree/master/week05), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a blog-style interface cataloging my progression with learning JavaScript in Data Structures this semester. The blog entries are categorized by the three final assignments. To view the final project, [click here](http://52.87.186.251:8080/process).
 
 #### The Data
-The data is stored using a semi-structured structure in Dynamodb. The final query structure is filtered by category. The params variable connects to the Dynamo db 'table', the elements of the blog entry (in the Projection Expression) and the filter parameter (Filter Expression). The query uses the scan operation to retrieve the data and the res.end has two handlebars variables, processData (the items in the Projection Expression) and category (the filter Expression). This project is different from the other examples as I am using both app.get and app.post. The app.get is the inital view of the application, which is set to the default category of AA Meetings. Using bodyParser, the app.post is how the webpage changes, after the inital load and based on the category filtering. This is visually represented in the dropdown menu. 
+The data is stored using a semi-structured structure in Dynamodb. The final query structure is filtered by category. The params variable connects to the Dynamo db 'table', the elements of the blog entry (in the Projection Expression) and the filter parameter (Filter Expression). The query uses the scan operation to retrieve the data and the res.end has two handlebars variables, processData (the items in the Projection Expression) and category (the filter Expression). This project is different from the other examples as I am using both app.get and app.post. The app.get is the initial view of the application, which is set to the default category of AA Meetings. Using bodyParser, the app.post is how the webpage changes, after the initial load and based on the category filtering. This is visually represented in the dropdown menu. 
 
 ```javascript
 var defaultCategory = "AA Meetings"
@@ -160,13 +160,58 @@ The visual representation is a clean, blog style interface which has a dropdown 
 ![Image of Process Blog](https://github.com/lulujordanna/data-structures/blob/master/final/images/process2.jpg)
 
 #### Connecting to the Endpoints
+Connecting the endpoints to the visual representation was multi-faceted. In the html portion of the document, I had to declare that the form become a POST form in order to connect to the app.post portion of the application. Then in the script tag, I re-named the handlebars variables in order to work with the queried data. I then created a table which would hold the entries data. Each table row has a specific part of the entries to create a column effect. To account of the semi-structured architecture not all of the posts have photos. In order to add them to the specified posts, I have created an if statement. Using JQuery, I load my entries into the #myEntries div. Finally the document.GetElementById is ensuring that the category selected in the drop down, remains the visible after you have clicked the submit button. 
 
+``` html
+   <div class="dropdown">
+      <form method="POST" id="project-dropdown">
+         <select class="category" id="category" name="category">
+           <option name="aa" value="AA Meetings">AA Meetings</option>
+           <option name="process" value="Process Blog">Process Blog</option>
+           <option name="temperature" value="Temperature Sensor">Temperature Sensor</option>
+         </select> 
+         <input type="submit" />
+      </form>
+   </div>
+   
+   <div id='myEntries'></div>
+```
+
+``` JavaScript
+      var data = {{{processData}}};
+      var category_name = {{{category}}};
+      
+      var myTable = `<table><tbody>`;
+      for (var i=0; i < data.length; i++) {
+      	 myTable += '<tr><td class="title-row">' + '<span>' + data[i].title.S + '</span>' + '</td></tr>';
+      	 myTable += '<tr><td class="category-row">'+ data[i].category.S + '</td></tr>';
+      	 myTable += '<tr><td class="date-row">' + data[i].date.S + '</td></tr>';
+      	 myTable += '<tr><td class="entry-row">' + data[i].entry.S + '</td></tr>';
+      	 
+      	 if (data[i].photo) { 
+      	    myTable += '<tr><td><img src='+data[i].photo.S+'><td></tr>'
+      	 }; 
+   
+      	 myTable += '<tr><td class="button-row">' + '<a href="'+data[i].url.S+'" target="_blank"><button>Learn more</button></a>' + '</td></tr>';
+      }
+      
+      myTable += '</tbody></table>'
+      
+      $(window).on('load', function() {
+        $("#myEntries").html(myTable)
+      });
+      
+      document.getElementById("category").value = category_name;
+```
+
+#### The Takeaways
+While I am very happy with the final outcome, there are some flaws in the sorting of the posts. As I am saving the date of the entry as a dateToString, this returns the timestamp as week day, month, day and year (Ex. Fri Aug 30 2019) and the posts are being sorted in alphabetical order by day of the week. Unfortunately due to time parameters I was not able to change this data structure and the posts do not appear in chronological order. 
 
 <hr>
 
 ### 3: Cool November: A Temperature Visualization
 This project combines weekly assignments 8, [9](https://github.com/lulujordanna/data-structures/tree/master/week09), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a temperature representation from the data I collected using a [Particle 
-Sensor](https://www.particle.io/). The visualization records the average hourly temperature of my bedroom over the course of a month and compares the temperature to when the air conditioner is running. I chose to explore this topic as I began to develop a wasteful habit of running my air conditioner to combat with the heat in my apartment unit. 
+Sensor](https://www.particle.io/). The visualization records the average hourly temperature of my bedroom over the course of a month and compares the temperature to when the air conditioner is running. I chose to explore this topic as I began to develop a wasteful habit of running my air conditioner to combat with the heat in my apartment unit. To view the final project, [click here](http://52.87.186.251:8080/sensor).
 
 #### The Data
 The data collected from the Particle Sensor was written to a PostgreSQL database. To query this data, I first wrote a sub-query which converts the time from GMT to EST. Then in my select clause, I extracted the year, month, day and hour from the timestamp in the adjSensorTime variable. The query then averages the temperature value and then groups the data by this new information. Similarly to the previous projects, I used Express and Handlebars to send the data to the webpage.
