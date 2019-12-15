@@ -104,6 +104,11 @@ I am very happy with the final outcome, as it not only reflects my intended desi
 
 <hr>
 
+### 2: Learning JS: A Process Blog
+This project brings together weekly assignments [5](https://github.com/lulujordanna/data-structures/tree/master/week05), [6](https://github.com/lulujordanna/data-structures/tree/master/week06), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a blog-style interface cataloging my progression with learning JavaScript in Data Structures this semester. The blog entries are categorized by the three final assignments and the data is stored using a semi-structured structure in DyanamoDB.
+
+<hr>
+
 ### 3: Cool November: A Temperature Visualization
 This project combines weekly assignments 8, [9](https://github.com/lulujordanna/data-structures/tree/master/week09), [10](https://github.com/lulujordanna/data-structures/tree/master/week10) and [11](https://github.com/lulujordanna/data-structures/tree/master/week11) to produce a temperature representation from the data I collected using a [Particle 
 Sensor](https://www.particle.io/). The visualization records the average hourly temperature of my bedroom over the course of a month and compares the temperature to when the air conditioner is running. I chose to explore this topic as I began to develop a wasteful habit of running my air conditioner to combat with the heat in my apartment unit. 
