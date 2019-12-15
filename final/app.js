@@ -112,13 +112,13 @@ function processQuery(res,category) {
     var params = {
                 TableName: "processblog",
                 ProjectionExpression: "category, #dt, title, entry, #u, photo",
-                FilterExpression: "category = :test",
+                FilterExpression: "category = :c",
                 ExpressionAttributeNames: { // name substitution, used for reserved words in DynamoDB
                  "#u" : "url", 
                  "#dt" : "date"
                     },
                  ExpressionAttributeValues: { // the query values
-                    ":test": {S: category}
+                    ":c": {S: category}
                 }
             };
             
