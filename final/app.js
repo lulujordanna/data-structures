@@ -131,7 +131,6 @@ function processQuery(res,category) {
             res.end(template3({ processData: JSON.stringify(data.Items), category: JSON.stringify(category)}));
         }
     });
-    
     return query;
 }
 
